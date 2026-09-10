@@ -8,6 +8,7 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `agent-orchestration` | The orchestrator: plan, brief, review, integrate. |
 | `agent-task-work` | Task agents implementing a brief. |
 | `agent-communication` | Workspace names, channels, context files, handoffs. |
+| `commit-attribution` | No agent co-authors or signatures in commits and PRs. |
 
 ## Install
 
