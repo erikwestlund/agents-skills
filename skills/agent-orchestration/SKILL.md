@@ -43,7 +43,7 @@ Write every brief so it works even if the agent never loads a skill. It gives:
 - the key rules, stated outright:
   - finish every step before asking for review
   - when in doubt about thoroughness, make it good
-  - run only focused tests
+  - run only focused tests, starting with the narrowest file or filter
   - commit on your own branch and don't push
   - give absolute paths in every message
 - **first brief only:** the base to update to, meaning the latest merged code
@@ -71,8 +71,11 @@ send it back: the task isn't done.
 
 ## Integrate
 
-- Merge the approved commits, resolve conflicts, and run the full suite. The
-  blast radius is yours.
+- Merge the approved commits and resolve conflicts. Once the focused runs pass,
+  run the full suite, because the blast radius is yours. While fixing a
+  failure, rerun only the failing file or filter, then run the suite again.
+  Read test output as `agent-task-work` describes, including laravel/pao's
+  JSON.
 - Keep the history sensible:
   - Squash fixups and review rounds into the change they fix.
   - Rebase onto the base.

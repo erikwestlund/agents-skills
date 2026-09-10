@@ -49,6 +49,18 @@ brief that's wrong. Say what you need and keep going on everything else.
 Run only the tests for your change, not the full suite; the orchestrator owns
 the blast radius. Report failures outside your scope instead of fixing them.
 
+**Start with the narrowest run**, one file or one filter, and widen only when
+it passes. Nearly all the context a test run costs comes from failure output:
+stack traces, diffs, and long progress lines. A failing file is cheap, and a
+failing suite is not.
+
+In PHP projects with laravel/pao installed, Pest, PHPUnit, Paratest, PHPStan,
+Rector, and Artisan give agents one compact JSON line instead of the usual
+report, such as `{"tool":"pest","result":"passed","tests":5,"passed":5}`.
+Failures list names and messages just as compactly. Read the JSON. Don't grep
+for `Tests:` or `PASS` lines, and don't pipe the output through `head` or
+`tail`.
+
 ## Subagents
 
 You may use subagents. They report only to you; if a question needs the
