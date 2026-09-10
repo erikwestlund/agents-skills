@@ -5,6 +5,10 @@ description: How orchestrator and task agents communicate, name Polyscope worksp
 
 # Agent communication
 
+This is the contract between orchestrator and task agents: the names, channels,
+files, and formats both sides rely on. `agent-orchestration` and
+`agent-task-work` set out each side's obligations under it.
+
 ## Names
 
 Polyscope names each worktree with an adjective and an animal
