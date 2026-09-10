@@ -8,7 +8,7 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `agent-orchestration` | The orchestrator: plan, brief, review, integrate. |
 | `agent-task-work` | Task agents implementing a brief. |
 | `agent-communication` | Workspace names, channels, context files, handoffs. |
-| `commit-attribution` | No agent co-authors or signatures in commits and PRs. |
+| `commits` | No agent attribution in commits and PRs; loose conventional-commit style. |
 | `project-docs` | Dated work logs in `docs/work/`, pickup notes in `docs/notes/`. |
 | `system-config` | Change the Mac only through `~/System`, never by hand. |
 | `r-stats` | Statistical work in R: framework, readability, notebooks, scripts, plots. |
