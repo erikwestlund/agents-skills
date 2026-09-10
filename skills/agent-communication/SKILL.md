@@ -36,17 +36,27 @@ Drop segments that add nothing.
 2-theme-1-copy-amber-fox
 ```
 
-The orchestrator names workspaces when it creates them. **Once a workspace has
-a name in this form, never rename it**, because other agents address you by
-that name.
+The workspace name is the git branch. Polyscope displays it from the `branch`
+column of its `worktrees` table in `~/.polyscope/polyscope.db`. The
+orchestrator or the user chooses the name. **The agent in the workspace
+renames itself by changing both the branch and that row.** Run this from the
+worktree root:
 
-The workspace name is the git branch. Renaming a workspace in the Polyscope app
-renames the branch and updates Polyscope's record, but nothing on disk moves.
-The checkout folder keeps the bare worktree name, and so does anything built
-from it, such as preview URLs.
+```
+new=<new-name>
+git branch -m "$new"
+sqlite3 ~/.polyscope/polyscope.db "update worktrees set branch = '$new', branch_renamed = 1 where path = '$(git rev-parse --show-toplevel)';"
+```
 
-- Rename only in the Polyscope app. `git branch -m` leaves Polyscope's record
-  out of date.
+The app's own rename action does the same thing. If you run only
+`git branch -m`, Polyscope may keep showing the old name.
+
+- **Rename once**, as soon as you're given the name. Polyscope may prompt a new
+  agent to choose its own branch name, but an assigned name takes precedence.
+- **Never rename again after that**, because other agents address you by that
+  name.
+- **Nothing on disk moves.** The checkout folder keeps the bare worktree name,
+  and so does anything built from it, such as preview URLs.
 - Sign messages and name context files with your branch, which is the full
   workspace name. Build paths and preview URLs from the folder.
 

@@ -13,8 +13,9 @@ The orchestrator wrote the plan and will review your work. Implement all of it.
   a strong one only when the problem is hard. If you're on a high-powered model
   (Fable, Astra, Sol, or similar) and the task looks routine, ask the user once
   whether that's intended, then go with their answer.
-- **Keep your name.** Never rename a workspace that already has its convention
-  name.
+- **Take your name.** If the brief assigns a workspace name, rename to it
+  first by updating both the git branch and Polyscope's database row, as
+  `agent-communication` shows. After that, never rename again.
 - **Update to the base** the first brief names, usually `origin/main`.
 - Read the whole brief: the files you own, the acceptance criteria, and the
   tests.

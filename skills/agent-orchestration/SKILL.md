@@ -25,8 +25,9 @@ whether that's intended, then go with their answer.
 - Keep tightly coupled work together, and do trivial work yourself.
 - Give routine tasks to a smaller model and hard ones to a strong model.
 - Keep one agent slot free for yourself.
-- When you create a workspace, name it by the convention in
-  `agent-communication`.
+- When you create a workspace, choose its name by the convention in
+  `agent-communication`. Put the name in the first brief and tell the agent to
+  rename itself to it first, as that skill describes.
 
 ## Brief
 
