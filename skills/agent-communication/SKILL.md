@@ -37,8 +37,18 @@ Drop segments that add nothing.
 ```
 
 The orchestrator names workspaces when it creates them. **Once a workspace has
-a name in this form, never rename it.** Sign messages and name context files
-with your full workspace name.
+a name in this form, never rename it**, because other agents address you by
+that name.
+
+The workspace name is the git branch. Renaming a workspace in the Polyscope app
+renames the branch and updates Polyscope's record, but nothing on disk moves.
+The checkout folder keeps the bare worktree name, and so does anything built
+from it, such as preview URLs.
+
+- Rename only in the Polyscope app. `git branch -m` leaves Polyscope's record
+  out of date.
+- Sign messages and name context files with your branch, which is the full
+  workspace name. Build paths and preview URLs from the folder.
 
 ## Who talks to whom
 
