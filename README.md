@@ -9,6 +9,8 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `agent-task-work` | Task agents implementing a brief. |
 | `agent-communication` | Workspace names, channels, context files, handoffs. |
 | `commit-attribution` | No agent co-authors or signatures in commits and PRs. |
+| `project-docs` | Dated work logs in `docs/work/`, pickup notes in `docs/notes/`. |
+| `r-stats` | Statistical work in R: framework, readability, notebooks, scripts, plots. |
 
 ## Install
 

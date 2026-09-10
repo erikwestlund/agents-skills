@@ -71,6 +71,9 @@ Address all 4 comments, rerun the focused tests, then post READY FOR REVIEW in
 
 ## Context files
 
+Context files carry live messages between agents. Lasting project notes go in
+`docs/` instead (see project-docs).
+
 - The orchestrator names one shared directory by absolute path in the brief,
   usually the main checkout's `.context/`. Other worktrees can't see a
   worktree's own `.context/`.
