@@ -1,6 +1,6 @@
 ---
 name: agent-orchestration
-description: How to orchestrate multi-agent work, where a strong model plans and reviews and smaller agents implement. Covers model fit, splitting work, naming Polyscope workspaces, briefs, nested orchestrators, review, and integration. Load when planning delegated work, starting an orchestrator workspace, or reviewing task agents' output.
+description: How to orchestrate multi-agent work, where a strong model plans and reviews and smaller agents implement. Covers model fit, splitting work, naming Polyscope workspaces, briefs, nested orchestrators, review, and integration. Load when delegating work across separate workspaces (usually Polyscope worktrees), starting an orchestrator workspace, or reviewing task agents' output.
 ---
 
 # Orchestration
@@ -10,6 +10,10 @@ implement, unless the problem is hard. You own the plan, the reviews, and the
 integration.
 
 ## Before starting
+
+**Check that this applies.** If you aren't running agents in separate
+workspaces (e.g. you're a single session in a main checkout), you aren't
+orchestrating. Just do the work.
 
 **Check the model.** If you're on a small or cheap model, ask the user once
 whether that's intended, then go with their answer.

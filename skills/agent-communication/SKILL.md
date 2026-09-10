@@ -9,6 +9,11 @@ This is the contract between orchestrator and task agents: the names, channels,
 files, and formats both sides rely on. `agent-orchestration` and
 `agent-task-work` set out each side's obligations under it.
 
+It applies when agents work in separate workspaces, usually Polyscope worktrees
+(checkouts under `~/.polyscope/`). In a single session with the user, such as a
+plain main checkout, skip it. Work directly, and brief any subagents in a few
+lines without names, context files, or handoff formats.
+
 ## Names
 
 Polyscope names each worktree with an adjective and an animal
