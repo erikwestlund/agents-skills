@@ -1,13 +1,26 @@
 ---
 name: agent-orchestration
-description: How to orchestrate multi-agent work, where a strong model plans and reviews and smaller agents implement. Covers model fit, splitting work, naming Polyscope workspaces, briefs, nested orchestrators, review, and integration. Load when delegating work across separate workspaces (usually Polyscope worktrees), starting an orchestrator workspace, or reviewing task agents' output.
+description: How to orchestrate multi-agent work. An Opus orchestrator dispatches and tracks, one Fable plan/review workspace (0-plan-review) plans and reviews, task agents on whatever model fits implement, and one Opus reconcile workspace (0-reconcile) merges and pushes. Covers roles and models, planning, splitting work, naming Polyscope workspaces, briefs, nested orchestrators, and review. Load when delegating work across separate workspaces (usually Polyscope worktrees), setting up the agents for a piece of work, or starting an orchestrator workspace.
 ---
 
 # Orchestration
 
-Strong models (Fable, Astra, Sol) plan and review. Smaller, faster models
-implement, unless the problem is hard. You own the plan, the reviews, and the
-integration.
+You dispatch and track. You turn the plan into briefs, keep the work moving,
+and relay between agents. Planning and review go to a stronger model, merging
+goes to a dedicated integrator, and implementation goes to whatever model fits.
+
+## Roles
+
+| Role | Workspace | Model | Does | Skill |
+|---|---|---|---|---|
+| Orchestrator (you) | `0-orchestrator-…` | Opus | Gets the plan, dispatches briefs, relays reviews, and tracks progress. | this one |
+| Plan/review | `0-plan-review-…`, only one | Fable, or a comparable strong model | Writes plans and reviews commits against them. Never merges or pushes. | `agent-plan-review` |
+| Task executor | `N-…-tasks-…`, as many as needed | Whatever fits: usually Opus, Sonnet for routine work, Fable only for hard problems | Implements one brief, then sends approved work to reconcile. | `agent-task-work` |
+| Reconcile | `0-reconcile-…`, only one | Opus | Merges approved work, resolves conflicts, runs the full suite, keeps the history clean, and pushes. | `agent-reconcile` |
+
+Most orchestration and integration is bookkeeping that runs long and fills a
+lot of context, which makes it the costliest place to put Fable. Save Fable
+for the plan and the reviews.
 
 ## Before starting
 
@@ -15,15 +28,30 @@ integration.
 workspaces (e.g. you're a single session in a main checkout), you aren't
 orchestrating. Just do the work.
 
-**Check the model.** If you're on a small or cheap model, ask the user once
-whether that's intended, then go with their answer.
+**Check the model.** The orchestrator runs on Opus. If you're on Fable or a
+similarly expensive model, or on a small one, ask the user once whether that's
+intended, then go with their answer.
 
-## Plan and split
+**Check the shared workspaces.** Find `0-plan-review` and `0-reconcile` with
+`ListAgents`. Create any that are missing, or ask the user to, and never start
+a second of either. Small efforts can skip both: plan, review, and integrate
+yourself, following their skills.
 
-- Plan first. Split the work into bounded tasks, each with a deliverable, its
-  own files (no overlap between tasks), acceptance criteria, and focused tests.
+## Plan
+
+- Request a plan from `0-plan-review`, as `plan-review-communication`
+  describes. It writes the plan to `docs/work/yyyy-mm-dd-<topic>-plan.md` and
+  replies with the path.
+- The plan file is the source of truth. Dispatch from it, and give its
+  absolute path in every brief and review request.
+
+## Split and dispatch
+
+- Follow the plan's tasks. Each has a deliverable, its own files (no overlap
+  between tasks), acceptance criteria, and focused tests.
 - Keep tightly coupled work together, and do trivial work yourself.
-- Give routine tasks to a smaller model and hard ones to a strong model.
+- Pick each task's model by fit: usually Opus, Sonnet for routine work, and
+  Fable only when the problem is hard.
 - Keep one agent slot free for yourself.
 - When you create a workspace, choose its name by the convention in
   `agent-communication`. Put the name in the first brief and tell the agent to
@@ -34,21 +62,24 @@ whether that's intended, then go with their answer.
 Write every brief so it works even if the agent never loads a skill. It gives:
 
 - an instruction to load the `agent-task-work` skill
+- the absolute path of the plan file
 - the goal and acceptance criteria
 - the steps, in order
 - the files the agent owns (everything else is read-only)
 - the focused tests to run
 - the channel: direct messages, or the absolute paths of the brief and handoff
   files
+- the names of `0-reconcile` and yourself
 - the key rules, stated outright:
   - finish every step before asking for review
   - when in doubt about thoroughness, make it good
   - run only focused tests, starting with the narrowest file or filter
-  - commit on your own branch and don't push
+  - commit on your own branch, and never merge or push
+  - once approved, send `0-reconcile` a merge request
   - give absolute paths in every message
-- **first brief only:** the base to update to, meaning the latest merged code
-  you know of. That's usually `origin/main`, or your own branch if its work
-  isn't live yet.
+- **first brief only:** the workspace name, and the base to update to, meaning
+  the latest integrated code. That's usually `origin/main`, or `0-reconcile`'s
+  branch if its work isn't pushed yet.
 
 ## Communicate
 
@@ -59,32 +90,33 @@ one copyable code block with absolute paths. Details: `agent-communication`.
 ## Nested orchestrators
 
 When work spans several problem surfaces, `0` may run one orchestrator per
-surface (`1-import-1-orchestrator-…`). Each surface orchestrator integrates its
-own tasks, runs the full suite, and hands one result up. `0` then merges the
-surfaces and runs the suite again.
+surface (`1-import-1-orchestrator-…`). Each dispatches and tracks its own
+tasks and hands one status up. All of them share the one `0-plan-review` and
+the one `0-reconcile`.
 
 ## Review
 
-Review the commits against the brief, not just the handoff. Send one batch of
-numbered, actionable comments. If a handoff covers only one of several steps,
-send it back: the task isn't done.
+If a handoff covers only one of several steps, send it back without a review,
+because the task isn't done.
 
-## Integrate
+Otherwise, send `0-plan-review` a review request, as
+`plan-review-communication` describes. When the comments come back, drop any
+that fall outside the brief and make sure each one is actionable. Then send
+the task agent one batch of numbered comments. When plan/review approves, tell
+the task agent `APPROVED`. It then sends its own merge request to
+`0-reconcile`.
 
-- Merge the approved commits and resolve conflicts. Once the focused runs pass,
-  run the full suite, because the blast radius is yours. While fixing a
-  failure, rerun only the failing file or filter, then run the suite again.
-  Read test output as `agent-task-work` describes, including laravel/pao's
-  JSON.
-- Keep the history sensible:
-  - Squash fixups and review rounds into the change they fix.
-  - Rebase onto the base.
-  - Keep unrelated changes in separate commits, with clear messages.
-  - Don't rewrite commits another agent is still building on.
-- Commit freely, but never push.
-- Send failures back to the agent that owns the code, or fix small ones
-  yourself.
-- Format the whole repository.
-- Report one outcome: what changed, which tests ran and their results, and the
-  remaining risks.
+## Track and finish
+
+- Watch for `MERGED` and `FAILED` from `0-reconcile`, and keep each task's
+  status current.
+- When a `FAILED` needs a decision about the plan, take it to `0-plan-review`.
 - If the user redirects or cancels, tell the affected agents immediately.
+- When the work is merged, report one outcome to the user: what changed, the
+  test results from `0-reconcile`, and the remaining risks.
+
+## Context
+
+You hold a long context. When it gets heavy, reset it as `context-reset`
+describes. The plan file, briefs, and handoffs should carry the state, not
+your transcript.

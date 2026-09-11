@@ -1,22 +1,27 @@
 ---
 name: agent-task-work
-description: How to work as a task (implementation) agent under an orchestrator. Covers model fit, the base branch, finishing every step before review, focused tests, subagents, and answering review. Load when an orchestrator hands you a brief, or when your Polyscope workspace name has a "tasks" role.
+description: How to work as a general-purpose task executor under an orchestrator. Covers model fit, the base branch, finishing every step before review, focused tests, subagents, answering review, and sending approved work to 0-reconcile to merge. Load when an orchestrator hands you a brief, or when your Polyscope workspace name has a "tasks" role.
 ---
 
 # Task work
 
-The orchestrator wrote the plan and will review your work. Implement all of it.
+The orchestrator dispatched your brief from a plan, and `0-plan-review` will
+check your commits against both. Once they're approved, `0-reconcile` merges
+them. Implement all of it. If your context gets heavy, reset it as
+`context-reset` describes.
 
 ## Before starting
 
-- **Check the model.** Task work usually goes to smaller, faster models, and to
-  a strong one only when the problem is hard. If you're on a high-powered model
-  (Fable, Astra, Sol, or similar) and the task looks routine, ask the user once
+- **Check the model.** Task work goes to the model that fits: usually Opus,
+  Sonnet for routine work, and Fable only for hard problems. If you're on Fable
+  or a similar high-powered model and the task looks routine, ask the user once
   whether that's intended, then go with their answer.
 - **Take your name.** If the brief assigns a workspace name, rename to it
   first by updating both the git branch and Polyscope's database row, as
-  `agent-communication` shows. After that, never rename again.
-- **Update to the base** the first brief names, usually `origin/main`.
+  `agent-communication` shows. After that, never rename again unless you're
+  repurposed (see `repurpose-workspace`).
+- **Update to the base** the first brief names, usually `origin/main` or
+  `0-reconcile`'s branch.
 - Read the whole brief: the files you own, the acceptance criteria, and the
   tests.
 
@@ -46,8 +51,9 @@ brief that's wrong. Say what you need and keep going on everything else.
 
 ## Tests
 
-Run only the tests for your change, not the full suite; the orchestrator owns
-the blast radius. Report failures outside your scope instead of fixing them.
+Run only the tests for your change, not the full suite. `0-reconcile` runs the
+full suite when it merges. Report failures outside your scope instead of
+fixing them.
 
 **Start with the narrowest run**, one file or one filter, and widen only when
 it passes. Nearly all the context a test run costs comes from failure output:
@@ -70,10 +76,16 @@ which skill to load.
 ## Scope
 
 Edit only the files the brief gives you, and ask before touching others. Commit
-on your branch, but never push or merge.
+on your branch, but never merge or push, because `0-reconcile` does that.
 
 ## Review
 
 Answer every comment by number: fixed (and how) or declined (and why). Rerun
 the focused tests, commit, and ask for review again. If you're told to cancel,
 stop before writing anything else.
+
+## Merge
+
+When the orchestrator tells you `APPROVED`, send `0-reconcile` a merge request,
+as `agent-communication` describes. Answer `CONFLICT` or `FAILED` the way you
+answer review comments. You're done when it replies `MERGED`.

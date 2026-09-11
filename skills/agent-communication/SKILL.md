@@ -1,13 +1,15 @@
 ---
 name: agent-communication
-description: How orchestrator and task agents communicate, name Polyscope workspaces, and use context files and handoffs. Load when starting or joining multi-agent work, sending a brief, handoff, or review, or naming a Polyscope workspace.
+description: How orchestrator, plan/review, task, and reconcile agents communicate. Covers naming Polyscope workspaces, who talks to whom, context files, handoffs, and merge requests. Load when starting or joining multi-agent work, sending a brief, handoff, review, or merge request, or naming a Polyscope workspace.
 ---
 
 # Agent communication
 
-This is the contract between orchestrator and task agents: the names, channels,
-files, and formats both sides rely on. `agent-orchestration` and
-`agent-task-work` set out each side's obligations under it.
+This is the contract between the orchestrator, plan/review, task, and
+reconcile agents: the names, channels, files, and formats they all rely on.
+`agent-orchestration`, `agent-plan-review`, `agent-task-work`, and
+`agent-reconcile` set out each role's obligations under it. Requests to
+plan/review follow `plan-review-communication`.
 
 It applies when agents work in separate workspaces, usually Polyscope worktrees
 (checkouts under `~/.polyscope/`). In a single session with the user, such as a
@@ -21,16 +23,20 @@ Polyscope names each worktree with an adjective and an animal
 
 `{topic}-{surface}-{agent}-{work}-{worktree}`
 
-- **topic**: a number that orders topics. `0` is the top-level orchestrator.
+- **topic**: a number that orders topics. `0` is top level, for the top
+  orchestrator and the two shared workspaces, plan/review and reconcile.
 - **surface**: the problem area (`import`, `theme`).
 - **agent**: a number within the topic, if there are several agents.
-- **work**: the role, if roles differ (`orchestrator`, `tasks`, `copy`, `review`).
+- **work**: the role, if roles differ (`orchestrator`, `plan-review`,
+  `reconcile`, `tasks`, `copy`).
 - **worktree**: the Polyscope name, unchanged.
 
 Drop segments that add nothing.
 
 ```
 0-orchestrator-smart-kitten
+0-plan-review-keen-heron
+0-reconcile-calm-lynx
 1-import-1-orchestrator-wistful-pony
 1-import-2-tasks-brave-otter
 2-theme-1-copy-amber-fox
@@ -54,7 +60,8 @@ The app's own rename action does the same thing. If you run only
 - **Rename once**, as soon as you're given the name. Polyscope may prompt a new
   agent to choose its own branch name, but an assigned name takes precedence.
 - **Never rename again after that**, because other agents address you by that
-  name.
+  name. The one exception is repurposing the workspace for a new role, as
+  `repurpose-workspace` describes.
 - **Nothing on disk moves.** The checkout folder keeps the bare worktree name,
   and so does anything built from it, such as preview URLs.
 - Sign messages and name context files with your branch, which is the full
@@ -64,7 +71,12 @@ The app's own rename action does the same thing. If you run only
 
 Each agent talks to its parent. Task agents talk to their topic's
 orchestrator, topic orchestrators to `0`, and subagents to the agent that
-spawned them.
+spawned them. There are two shared workspaces:
+
+- **`0-plan-review`**: orchestrators at every level send it plan and review
+  requests. Its review comments reach task agents through their orchestrator.
+- **`0-reconcile`**: task agents send it merge requests once their work is
+  approved. It replies to the task agent and to that agent's orchestrator.
 
 ## Channels
 
@@ -103,13 +115,16 @@ Context files carry live messages between agents. Lasting project notes go in
     approval.
   - `<name>.handoff.md`, written by the task agent: handoffs, questions, and
     replies.
+- Merge requests use `<name>.merge-request.md`, written by the task agent, and
+  `<name>.merge-reply.md`, written by reconcile.
 - Append each entry under a dated, signed heading that starts with a status:
-  `READY FOR REVIEW`, `CHANGES REQUESTED`, `BLOCKED`, `QUESTION`, or
-  `APPROVED`.
+  `READY FOR REVIEW`, `CHANGES REQUESTED`, `BLOCKED`, `QUESTION`, `APPROVED`,
+  `MERGE`, `MERGED`, `CONFLICT`, or `FAILED`.
 
 **Watch the other side's file** so you resume without being nudged. In Claude
 Code, use `Monitor` with an until-loop that exits on a new status line.
-Elsewhere, poll every 30-60 seconds. Stop at `APPROVED` or when told.
+Elsewhere, poll every 30-60 seconds. Stop at `APPROVED` or `MERGED`, or when
+told.
 
 ## Handoffs
 
@@ -124,3 +139,30 @@ Keep them short and explicit:
 
 Send a review as one batch of numbered, actionable comments. Answer each by
 number: fixed (and how) or declined (and why).
+
+## Merge requests
+
+Once its work is `APPROVED`, the task agent sends `0-reconcile` a merge
+request:
+
+```
+To: 0-reconcile-calm-lynx
+From: 1-import-2-tasks-brave-otter
+Request: MERGE
+Orchestrator: 1-import-1-orchestrator-wistful-pony
+Plan: /Users/erik/.polyscope/clones/8389bf53/wistful-pony/docs/work/2026-09-11-import-plan.md
+Worktree: /Users/erik/.polyscope/clones/8389bf53/brave-otter
+Branch: 1-import-2-tasks-brave-otter
+Commits: a1b2c3d..e4f5a6b
+Approved: round 2, by 0-plan-review-keen-heron
+Tests: the focused tests run, and their results
+```
+
+Reconcile replies to the task agent and its orchestrator with one of these:
+
+- `MERGED`, with the resulting commit
+- `CONFLICT` or `FAILED`, with numbered details and what it needs
+- `QUESTION`, when it needs something before it can continue
+
+Answer `CONFLICT` and `FAILED` the way you answer review comments. Fix the
+problem, then send a new merge request with only the new commits.
