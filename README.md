@@ -19,6 +19,10 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `system-config` | Change the Mac only through `~/System`, never by hand. |
 | `r-stats` | Statistical work in R: framework, readability, notebooks, scripts, plots. |
 
+The harness can also route an agent to a third-party API instead of a Claude
+model. Which models are in use changes over time; plan/review gets the stronger
+one, and every other role the cheaper one.
+
 ## Install
 
 ```bash

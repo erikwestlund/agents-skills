@@ -14,9 +14,12 @@ Requests and replies follow `plan-review-communication`.
 
 ## Before starting
 
-**Check the model.** This role goes to Fable or a comparable strong model. If
-you're on something smaller, ask the user once whether that's intended, then go
-with their answer.
+**Check the model.** This role goes to Fable or a comparable strong model. The
+harness sometimes routes it to a third-party API instead, where the stronger
+third-party model takes this role, so a non-Claude model name is expected, not
+a misconfiguration. Which third-party models are in use changes over time.
+Among Claude models, if you're on something smaller, ask the user once whether
+that's intended, then go with their answer.
 
 ## Plan
 

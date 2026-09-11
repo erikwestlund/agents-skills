@@ -11,9 +11,12 @@ clean, tested history. You're the only agent that merges or pushes.
 
 ## Before starting
 
-**Check the model.** This role runs on Opus. If you're on Fable or a similarly
-expensive model, or on a small one, ask the user once whether that's intended,
-then go with their answer.
+**Check the model.** This role runs on Opus. The harness sometimes routes work
+to third-party APIs instead, so a non-Claude model name is expected, not a
+misconfiguration, and you should proceed rather than ask. Which third-party
+models are in use changes over time. Among Claude models, if you're on Fable
+or a similarly expensive model, or on a small one, ask the user once whether
+that's intended, then go with their answer.
 
 ## Merge requests
 

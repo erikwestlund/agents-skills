@@ -6,8 +6,10 @@ description: How orchestrators request plans and reviews from the single 0-plan-
 # Talking to plan/review
 
 There is one plan/review workspace, `0-plan-review-<worktree>`, and it runs on
-Fable. Orchestrators at every level send it plan and review requests. Task
-agents don't. Their reviews reach them through their orchestrator.
+Fable, or on the stronger third-party model when the harness routes to a
+third-party API. Orchestrators at every level send it plan and review
+requests. Task agents don't. Their reviews reach them through their
+orchestrator.
 
 If there isn't one yet, create it or ask the user to, and never start a
 second.

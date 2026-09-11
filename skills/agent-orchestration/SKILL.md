@@ -18,6 +18,10 @@ goes to a dedicated integrator, and implementation goes to whatever model fits.
 | Task executor | `N-…-tasks-…`, as many as needed | Whatever fits: usually Opus, Sonnet for routine work, Fable only for hard problems | Implements one brief, then sends approved work to reconcile. | `agent-task-work` |
 | Reconcile | `0-reconcile-…`, only one | Opus | Merges approved work, resolves conflicts, runs the full suite, keeps the history clean, and pushes. | `agent-reconcile` |
 
+Under the third-party fallback the model column collapses to one model: the
+stronger third-party model takes plan/review, and one cheaper third-party
+model covers every other role. Which models those are changes over time.
+
 Most orchestration and integration is bookkeeping that runs long and fills a
 lot of context, which makes it the costliest place to put Fable. Save Fable
 for the plan and the reviews.
@@ -28,9 +32,12 @@ for the plan and the reviews.
 workspaces (e.g. you're a single session in a main checkout), you aren't
 orchestrating. Just do the work.
 
-**Check the model.** The orchestrator runs on Opus. If you're on Fable or a
-similarly expensive model, or on a small one, ask the user once whether that's
-intended, then go with their answer.
+**Check the model.** The orchestrator runs on Opus. The harness sometimes
+routes work to third-party APIs instead, so a non-Claude model name is
+expected, not a misconfiguration, and you should proceed rather than ask.
+Which third-party models are in use changes over time. Among Claude models, if
+you're on Fable or a similarly expensive model, or on a small one, ask the
+user once whether that's intended, then go with their answer.
 
 **Check the shared workspaces.** Find `0-plan-review` and `0-reconcile` with
 `ListAgents`. Create any that are missing, or ask the user to, and never start
@@ -51,7 +58,9 @@ yourself, following their skills.
   between tasks), acceptance criteria, and focused tests.
 - Keep tightly coupled work together, and do trivial work yourself.
 - Pick each task's model by fit: usually Opus, Sonnet for routine work, and
-  Fable only when the problem is hard.
+  Fable only when the problem is hard. Skip this in third-party mode, where
+  every task runs the same cheaper model and the plan's suggested model
+  doesn't apply.
 - Keep one agent slot free for yourself.
 - When you create a workspace, choose its name by the convention in
   `agent-communication`. Put the name in the first brief and tell the agent to

@@ -13,9 +13,13 @@ them. Implement all of it. If your context gets heavy, reset it as
 ## Before starting
 
 - **Check the model.** Task work goes to the model that fits: usually Opus,
-  Sonnet for routine work, and Fable only for hard problems. If you're on Fable
-  or a similar high-powered model and the task looks routine, ask the user once
-  whether that's intended, then go with their answer.
+  Sonnet for routine work, and Fable only for hard problems. The harness
+  sometimes routes work to third-party APIs instead, where every task runs one
+  cheaper third-party model, so a non-Claude model name is expected, not a
+  misconfiguration. Which third-party models are in use changes over time.
+  Among Claude models, if you're on Fable or a similar high-powered model and
+  the task looks routine, ask the user once whether that's intended, then go
+  with their answer.
 - **Take your name.** If the brief assigns a workspace name, rename to it
   first by updating both the git branch and Polyscope's database row, as
   `agent-communication` shows. After that, never rename again unless you're
