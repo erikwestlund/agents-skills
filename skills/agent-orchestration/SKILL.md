@@ -9,6 +9,17 @@ You dispatch and track. You turn the plan into briefs, keep the work moving,
 and relay between agents. Planning and review go to a stronger model, merging
 goes to a dedicated integrator, and implementation goes to whatever model fits.
 
+## User-facing term
+
+`Orchestrated team` is the user-facing term for this workflow. It means a
+multi-agent effort with an orchestrator, plan/review, task executors, and
+reconciliation. A request may name proposed `work units`; treat them as plan
+input, then split or combine them according to dependencies and file overlap.
+
+`Claude Code` identifies the requested agent runtime. It does not require a
+specific messaging transport. Choose direct messages or context files from the
+actual harness capabilities, as `agent-communication` describes.
+
 ## Roles
 
 | Role | Workspace | Model | Does | Skill |
