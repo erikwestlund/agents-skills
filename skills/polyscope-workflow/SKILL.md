@@ -15,8 +15,8 @@ need to communicate.
 Use an explicit assignment or brief first. Otherwise, use the workspace name,
 which is normally the current git branch:
 
-- `0-orchestrator-*` or `*-orchestrator-*`: load `agent-orchestration`.
-- `0-plan-review-*`: load `agent-plan-review`.
+- `*-orchestrator-*`: load `agent-orchestration`.
+- `*-plan-review-*`: load `agent-plan-review`.
 - `0-reconcile-*`: load `agent-reconcile`.
 - `*-tasks-*`, or a brief assigning task execution: load `agent-task-work`.
 - An explicit request to reuse the workspace: load `agent-repurpose-workspace`, then
@@ -30,8 +30,8 @@ Load one role skill. Load supplemental skills when the operation reaches them:
 
 - `agent-communication` for naming, cross-workspace messages, handoffs, review
   statuses, and merge requests.
-- `plan-review-communication` for a plan or review exchange with
-  `0-plan-review`.
+- `plan-review-communication` for a plan or review exchange within the
+  current task group.
 - `context-reset` when preparing for a reset.
 
 A workspace without a multi-agent assignment remains an ordinary workspace.

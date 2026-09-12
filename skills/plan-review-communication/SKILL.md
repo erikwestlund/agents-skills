@@ -1,18 +1,19 @@
 ---
 name: plan-review-communication
-description: "Exchange plan and review requests with the single 0-plan-review workspace. Load when sending or handling those requests."
+description: "Exchange plan and review requests within one task group. Load when sending or handling those requests."
 ---
 
-# Talking to plan/review
+# Talking to group plan/review
 
-There is one plan/review workspace, `0-plan-review-<worktree>`, and it runs on
-Fable, or on the stronger third-party model when the harness routes to a
-third-party API. Orchestrators at every level send it plan and review
-requests. Task agents don't. Their reviews reach them through their
-orchestrator.
+Each task group can have one plan/review workspace,
+`N-<group>-…-plan-review-<worktree>`. It runs on the planner model. It handles
+that group's plan and review. Task agents do not contact it directly.
 
-If there isn't one yet, create it or ask the user to, and never start a
-second.
+The team launcher creates one before the group's orchestrator, so every
+multi-group effort has a real plan before task dispatch. The planner sends its
+first `PLAN READY` result to the team launcher; after that the group
+orchestrator sends plan and review requests. Do not create one for another
+group.
 
 ## Channel
 
@@ -30,18 +31,18 @@ context since your last one. Start with the request type, sign it, and give
 absolute paths for everything.
 
 ```
-To: 0-plan-review-keen-heron
+To: 1-import-1-plan-review-keen-heron
 From: 1-import-1-orchestrator-wistful-pony
 Request: REVIEW
-Plan: /absolute/path/to/orchestrator/docs/work/2026-09-11-import-plan.md
+Plan: /absolute/path/to/planner-worktree/docs/work/2026-09-11-import-plan.md
 Brief: /absolute/path/to/project/.context/1-import-2-tasks-brave-otter.brief.md
 Worktree: /absolute/path/to/task-worktree
 Commits: a1b2c3d..e4f5a6b
 Round: 2. Comments 1-4 from round 1; the task agent says all are fixed.
 ```
 
-- **PLAN:** give the goal, the constraints, the checkout to write the plan in,
-  and pointers to the context it needs, such as files, docs, and earlier plans.
+- **PLAN:** give the group goal, constraints, checkout to write the plan in,
+  and pointers to the context it needs, such as files and docs.
 - **REVIEW:** give the plan file, the brief, the task's worktree, and the
   commit range. For later rounds, add the round number and the previous
   comments, and send only the new commits.

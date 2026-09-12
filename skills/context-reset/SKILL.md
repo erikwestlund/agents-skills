@@ -44,9 +44,9 @@ compaction warnings) or the user asks, reset it instead of pushing on.
    files. Trust the repo over the note where they disagree.
 3. **Check in before you act.** Message the agents you depend on. Say where you
    think things stand and ask what has changed since:
-   - **Orchestrators** check in with `0-plan-review` and `0-reconcile`.
+   - **Orchestrators** check in with their group plan/review and `0-reconcile`.
    - **Task agents** check in with their orchestrator.
-   - **`0-plan-review` and `0-reconcile`** check in with each orchestrator
+   - **Group plan/review and `0-reconcile`** check in with each orchestrator
      whose request is still open.
 4. Continue from the next step once they've answered, or once you've confirmed
    nothing is waiting on them.

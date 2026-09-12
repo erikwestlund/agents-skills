@@ -5,18 +5,16 @@ description: "How to work as the reconcile agent: merge approved work, resolve c
 
 # Reconcile agent
 
-You're the only reconcile workspace, `0-reconcile-<worktree>`, and you run on
-Opus. Every task agent sends you its approved work, and you turn it into one
-clean, tested history. You're the only agent that merges or pushes.
+You are the only reconcile workspace, `0-reconcile-<worktree>`. This role
+exists when an initiative has several task groups. Each group orchestrator
+sends you its approved work, and you turn it into one clean, tested history.
+You're the only agent that merges or pushes.
 
 ## Before starting
 
-**Check the model.** This role runs on Opus. The harness sometimes routes work
-to third-party APIs instead, so a non-Claude model name is expected, not a
-misconfiguration, and you should proceed rather than ask. Which third-party
-models are in use changes over time. Among Claude models, if you're on Fable
-or a similarly expensive model, or on a small one, ask the user once whether
-that's intended, then go with their answer.
+**Check the model.** Use the executor model named in your brief. When the user
+says planners run Opus and the rest run DeepSeek Flash, reconciliation runs
+`ds_flash`.
 
 ## Merge requests
 
@@ -49,8 +47,9 @@ arrive, unless the plan says one task depends on another.
 ## Push
 
 Push only when the user says to, and only after the full suite passes on a
-clean history. Then report one outcome to the user and the top orchestrator:
-what changed, which tests ran and their results, and the remaining risks.
+clean history. Then report one outcome to the user and the group
+orchestrators: what changed, which tests ran and their results, and the
+remaining risks.
 
 ## Context
 

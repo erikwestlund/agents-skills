@@ -21,10 +21,11 @@ lines without names, context files, or handoff formats.
 Polyscope names each worktree with an adjective and an animal
 (`blissful-woodpecker`). Prefix it so workspaces sort and read clearly:
 
-`{topic}-{surface}-{agent}-{work}-{worktree}`
+`{group}-{surface}-{agent}-{work}-{worktree}`
 
-- **topic**: a number that orders topics. `0` is top level, for the top
-  orchestrator and the two shared workspaces, plan/review and reconcile.
+- **group**: a number that orders task groups. `0` is reserved for
+  reconciliation. A single-task initiative can use `0` for its task workspace;
+  task groups start at `1` when more work is added.
 - **surface**: the problem area (`import`, `theme`).
 - **agent**: a number within the topic, if there are several agents.
 - **work**: the role, if roles differ (`orchestrator`, `plan-review`,
@@ -34,12 +35,11 @@ Polyscope names each worktree with an adjective and an animal
 Drop segments that add nothing.
 
 ```
-0-orchestrator-smart-kitten
-0-plan-review-keen-heron
 0-reconcile-calm-lynx
+0-sign-up-tasks-quick-otter
 1-import-1-orchestrator-wistful-pony
 1-import-2-tasks-brave-otter
-2-theme-1-copy-amber-fox
+2-demos-1-plan-review-amber-fox
 ```
 
 The workspace name is the git branch. Polyscope displays it from the `branch`
@@ -60,8 +60,9 @@ The app's own rename action does the same thing. If you run only
 - **Rename once**, as soon as you're given the name. Polyscope may prompt a new
   agent to choose its own branch name, but an assigned name takes precedence.
 - **Never rename again after that**, because other agents address you by that
-  name. The one exception is repurposing the workspace for a new role, as
-  `agent-repurpose-workspace` describes.
+  name. The one exception is repurposing the workspace for a new role, such as
+  changing a single-task `0-…-tasks` workspace into `0-reconcile-…` after the
+  initiative gains task groups, as `agent-repurpose-workspace` describes.
 - **Nothing on disk moves.** The checkout folder keeps the bare worktree name,
   and so does anything built from it, such as preview URLs.
 - Sign messages and name context files with your branch, which is the full
@@ -69,14 +70,12 @@ The app's own rename action does the same thing. If you run only
 
 ## Who talks to whom
 
-Each agent talks to its parent. Task agents talk to their topic's
-orchestrator, topic orchestrators to `0`, and subagents to the agent that
-spawned them. There are two shared workspaces:
+Each agent talks to its parent. Task agents talk to their group’s orchestrator,
+and subagents talk to the agent that spawned them. There is one initiative-level
+workspace:
 
-- **`0-plan-review`**: orchestrators at every level send it plan and review
-  requests. Its review comments reach task agents through their orchestrator.
-- **`0-reconcile`**: task agents send it merge requests once their work is
-  approved. It replies to the task agent and to that agent's orchestrator.
+- **`0-reconcile`**: receives approved group merge requests when more than one
+  task group exists. A single task reconciles its own change.
 
 ## Select The Transport
 
@@ -121,19 +120,20 @@ number: fixed (and how) or declined (and why).
 
 ## Merge requests
 
-Once its work is `APPROVED`, the task agent sends `0-reconcile` a merge
-request:
+Once a group’s work is `APPROVED`, its orchestrator sends `0-reconcile` a
+merge request. A single `0-…-tasks` workspace has no separate merge request:
+it reconciles its own change.
 
 ```
 To: 0-reconcile-calm-lynx
 From: 1-import-2-tasks-brave-otter
 Request: MERGE
 Orchestrator: 1-import-1-orchestrator-wistful-pony
-Plan: /absolute/path/to/orchestrator/docs/work/2026-09-11-import-plan.md
+Plan: /absolute/path/to/planner-worktree/docs/work/2026-09-11-import-plan.md
 Worktree: /absolute/path/to/task-worktree
 Branch: 1-import-2-tasks-brave-otter
 Commits: a1b2c3d..e4f5a6b
-Approved: round 2, by 0-plan-review-keen-heron
+Approved: round 2, by 1-import-1-plan-review-keen-heron
 Tests: the focused tests run, and their results
 ```
 

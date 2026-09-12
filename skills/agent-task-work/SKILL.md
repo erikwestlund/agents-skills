@@ -1,31 +1,32 @@
 ---
 name: agent-task-work
-description: "How to work as a task executor under an orchestrator: implement the whole brief, run focused tests, answer review, and hand off to 0-reconcile. Load when an orchestrator hands you a brief, or when your Polyscope workspace name has a \"tasks\" role."
+description: "How to work as a task executor under an orchestrator: implement the whole brief, test it, answer review, and reconcile or hand it off. Load when an orchestrator hands you a brief, or when your Polyscope workspace name has a \"tasks\" role."
 ---
 
 # Task work
 
-The orchestrator dispatched your brief from a plan, and `0-plan-review` will
-check your commits against both. Once they're approved, `0-reconcile` merges
-them. Implement all of it. If your context gets heavy, reset it as
-`context-reset` describes.
+The orchestrator dispatched your brief from a plan, and your group’s
+plan/review workspace will check your commits against it. When several task
+groups exist, `0-reconcile` merges approved group work. A single
+`0-…-tasks` workspace reconciles its own change. Implement all of it. If your
+context gets heavy, reset it as `context-reset` describes.
+
+If your activation brief says that you are waiting for an orchestrator's
+plan-derived task brief, do exactly that: load this skill, confirm your
+workspace name and model, then wait. Do not inspect or edit the project merely
+to look busy. Start the workflow below only after the brief arrives.
 
 ## Before starting
 
-- **Check the model.** Task work goes to the model that fits: usually Opus,
-  Sonnet for routine work, and Fable only for hard problems. The harness
-  sometimes routes work to third-party APIs instead, where every task runs one
-  cheaper third-party model, so a non-Claude model name is expected, not a
-  misconfiguration. Which third-party models are in use changes over time.
-  Among Claude models, if you're on Fable or a similar high-powered model and
-  the task looks routine, ask the user once whether that's intended, then go
-  with their answer.
+- **Check the model.** Use the executor model named in your brief. When the
+  user says planners run Opus and the rest run DeepSeek Flash, task work runs
+  `ds_flash`; do not substitute the planner model.
 - **Take your name.** If the brief assigns a workspace name, rename to it
   first by updating both the git branch and Polyscope's database row, as
   `agent-communication` shows. After that, never rename again unless you're
   repurposed (see `agent-repurpose-workspace`).
 - **Update to the base** the first brief names, usually `origin/main` or
-  `0-reconcile`'s branch.
+  `0-reconcile`'s branch when that workspace exists.
 - Read the whole brief: the files you own, the acceptance criteria, and the
   tests.
 
@@ -54,9 +55,10 @@ brief that's wrong. Say what you need and keep going on everything else.
 
 ## Tests
 
-Run only the tests for your change, not the full suite. `0-reconcile` runs the
-full suite when it merges. Report failures outside your scope instead of
-fixing them.
+Run only the tests for your change, not the full suite, unless you are the
+single `0-…-tasks` workspace. That workspace performs the reconciliation
+checks required by its brief, including the appropriate integrated suite.
+Report failures outside your scope instead of fixing them.
 
 **Start with the narrowest run**, one file or one filter, and widen only when
 it passes. Nearly all the context a test run costs comes from failure output:
@@ -79,7 +81,9 @@ which skill to load.
 ## Scope
 
 Edit only the files the brief gives you, and ask before touching others. Commit
-on your branch, but never merge or push, because `0-reconcile` does that.
+on your branch. In a multi-group effort, never merge or push because
+`0-reconcile` does that. A single-task workspace follows its brief’s
+integration instructions; pushing still requires the user's authorization.
 
 ## Review
 
@@ -89,6 +93,8 @@ stop before writing anything else.
 
 ## Merge
 
-When the orchestrator tells you `APPROVED`, send `0-reconcile` a merge request,
-as `agent-communication` describes. Answer `CONFLICT` or `FAILED` the way you
-answer review comments. You're done when it replies `MERGED`.
+When the orchestrator tells you `APPROVED`, send `0-reconcile` a merge request
+in a multi-group effort, as `agent-communication` describes. A single
+`0-…-tasks` workspace completes its own reconciliation checks and reports the
+result to its orchestrator. Answer `CONFLICT` or `FAILED` the way you answer
+review comments. You're done when the change is reconciled.

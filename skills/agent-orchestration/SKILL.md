@@ -5,9 +5,21 @@ description: "How to orchestrate multi-agent work across separate workspaces (us
 
 # Orchestration
 
-You dispatch and track. You turn the plan into briefs, keep the work moving,
-and relay between agents. Planning and review go to a stronger model, merging
-goes to a dedicated integrator, and implementation goes to whatever model fits.
+You dispatch and track. You turn an approved group plan into briefs, keep the
+work moving, and relay between agents. Planning and review are a separate
+role; merging goes to a dedicated integrator.
+
+## User-facing term
+
+`Orchestrated team` is the user-facing term for this workflow. The named work
+units are task groups. Each group has a planner, an orchestrator, and one or
+more task executors.
+
+`Claude Code` identifies the requested agent runtime. It does not require a
+specific messaging transport. Choose direct messages or context files from the
+actual harness capabilities, as `agent-communication` describes.
+
+Only a group orchestrator launches or delegates work inside its assigned group.
 
 ## User-facing term
 
@@ -24,18 +36,27 @@ actual harness capabilities, as `agent-communication` describes.
 
 | Role | Workspace | Model | Does | Skill |
 |---|---|---|---|---|
-| Orchestrator (you) | `0-orchestrator-…` | Opus | Gets the plan, dispatches briefs, relays reviews, and tracks progress. | this one |
-| Plan/review | `0-plan-review-…`, only one | Fable, or a comparable strong model | Writes plans and reviews commits against them. Never merges or pushes. | `agent-plan-review` |
-| Task executor | `N-…-tasks-…`, as many as needed | Whatever fits: usually Opus, Sonnet for routine work, Fable only for hard problems | Implements one brief, then sends approved work to reconcile. | `agent-task-work` |
-| Reconcile | `0-reconcile-…`, only one | Opus | Merges approved work, resolves conflicts, runs the full suite, keeps the history clean, and pushes. | `agent-reconcile` |
+| Group plan/review | `N-<group>-…-plan-review-…` | Planner model | Writes one group plan and reviews that group’s completed work. | `agent-plan-review` |
+| Group orchestrator | `N-<group>-…-orchestrator-…` | Executor model | Turns the approved plan into briefs, dispatches workers, and tracks the group. | this one |
+| Task executor | `N-<group>-…-tasks-…`, as many as the plan needs | Executor model | Implements one brief for its group. | `agent-task-work` |
+| Reconcile | `0-reconcile-…`, only one when several groups exist | Executor model | Merges approved groups, resolves conflicts, runs the full suite, keeps the history clean, and pushes. | `agent-reconcile` |
 
-Under the third-party fallback the model column collapses to one model: the
-stronger third-party model takes plan/review, and one cheaper third-party
-model covers every other role. Which models those are changes over time.
+For example, “planners run Opus; the rest run DeepSeek Flash” means
+`claude_opus` for group plan/review and `ds_flash` for the other three roles.
+An orchestrator is not a planner.
 
-Most orchestration and integration is bookkeeping that runs long and fills a
-lot of context, which makes it the costliest place to put Fable. Save Fable
-for the plan and the reviews.
+## Scope and numbering
+
+`0` is the reconciliation namespace. A multi-group initiative starts
+`0-reconcile`, and task groups start at `1`, so their workspaces remain stable
+as the initiative expands.
+
+For an initiative with one task group and one work unit, use one
+`0-<topic>-tasks-…` workspace. It implements and reconciles its own change; do
+not create a separate reconcile workspace. If more task groups are added, use
+`agent-repurpose-workspace` to
+turn the `0` workspace into `0-reconcile-…` when appropriate, and name the new
+groups `1`, `2`, and onward.
 
 ## Before starting
 
@@ -43,35 +64,23 @@ for the plan and the reviews.
 workspaces (e.g. you're a single session in a main checkout), you aren't
 orchestrating. Just do the work.
 
-**Check the model.** The orchestrator runs on Opus. The harness sometimes
-routes work to third-party APIs instead, so a non-Claude model name is
-expected, not a misconfiguration, and you should proceed rather than ask.
-Which third-party models are in use changes over time. Among Claude models, if
-you're on Fable or a similarly expensive model, or on a small one, ask the
-user once whether that's intended, then go with their answer.
+**Check the model and plan.** You run on the group's executor model. Your
+brief must name an approved group-plan path and the plan/review workspace. If
+it does not, ask the team launcher for them; do not write a replacement plan
+or dispatch workers from guesses.
 
-**Check the shared workspaces.** Find `0-plan-review` and `0-reconcile` with
-`ListAgents`. Create any that are missing, or ask the user to, and never start
-a second of either. Small efforts can skip both: plan, review, and integrate
-yourself, following their skills.
-
-## Plan
-
-- Request a plan from `0-plan-review`, as `plan-review-communication`
-  describes. It writes the plan to `docs/work/yyyy-mm-dd-<topic>-plan.md` and
-  replies with the path.
-- The plan file is the source of truth. Dispatch from it, and give its
-  absolute path in every brief and review request.
+**Check the shared workspace.** `polyscope-team-launch` creates
+`0-reconcile` first for a multi-group initiative. Never start a second.
 
 ## Split and dispatch
 
-- Follow the plan's tasks. Each has a deliverable, its own files (no overlap
-  between tasks), acceptance criteria, and focused tests.
-- Keep tightly coupled work together, and do trivial work yourself.
-- Pick each task's model by fit: usually Opus, Sonnet for routine work, and
-  Fable only when the problem is hard. Skip this in third-party mode, where
-  every task runs the same cheaper model and the plan's suggested model
-  doesn't apply.
+- Follow the approved group plan. Turn its work into units with
+  deliverables, file ownership, acceptance criteria, and focused tests.
+- Keep tightly coupled work in one group. A group with one work unit can have
+  one task executor; a larger group can dispatch several task executors.
+- Launch every task worker on the group’s executor model unless the user
+  explicitly assigns a different model. Do not silently substitute the
+  planner model.
 - Keep one agent slot free for yourself.
 - When you create a workspace, choose its name by the convention in
   `agent-communication`. Put the name in the first brief and tell the agent to
@@ -107,31 +116,32 @@ Use direct messages when every agent is Claude Code, and context files
 otherwise, watching the handoff files. Put any message a person has to carry in
 one copyable code block with absolute paths. Details: `agent-communication`.
 
-## Nested orchestrators
+## Group orchestration
 
-When work spans several problem surfaces, `0` may run one orchestrator per
-surface (`1-import-1-orchestrator-…`). Each dispatches and tracks its own
-tasks and hands one status up. All of them share the one `0-plan-review` and
-the one `0-reconcile`.
+Every task group has its own planner and orchestrator. The orchestrator
+dispatches and tracks that group’s task executors, relays local review, and
+reports one approved merge candidate to `0-reconcile`. Groups coordinate shared
+contracts directly and share one `0-reconcile` when it exists.
 
 ## Review
 
 If a handoff covers only one of several steps, send it back without a review,
 because the task isn't done.
 
-Otherwise, send `0-plan-review` a review request, as
-`plan-review-communication` describes. When the comments come back, drop any
-that fall outside the brief and make sure each one is actionable. Then send
-the task agent one batch of numbered comments. When plan/review approves, tell
-the task agent `APPROVED`. It then sends its own merge request to
-`0-reconcile`.
+Otherwise, send the group’s plan/review workspace a review request. Send
+cross-group questions to the affected group orchestrator. When the comments
+come back, drop any that fall outside the brief and make sure each one is
+actionable. Then send the task agent one batch of numbered comments. Once a
+group’s work is approved, its orchestrator sends the merge request to
+`0-reconcile`, or the single task reconciles its own change.
 
 ## Track and finish
 
-- Watch for `MERGED` and `FAILED` from `0-reconcile`, and keep each task's
+- Watch for `MERGED` and `FAILED` from `0-reconcile`, and keep each group’s
   status current.
-- When a `FAILED` needs a decision about the plan, take it to `0-plan-review`.
-- If the user redirects or cancels, tell the affected agents immediately.
+- When a `FAILED` needs a decision about shared contracts or dependencies,
+  coordinate with the affected group or ask the user.
+- If the user redirects or cancels, tell the affected group immediately.
 - When the work is merged, report one outcome to the user: what changed, the
   test results from `0-reconcile`, and the remaining risks.
 
