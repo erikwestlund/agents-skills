@@ -1,6 +1,6 @@
 ---
 name: prose-style
-description: Erik's prose style: the LLM-isms he bans, plus register, voice, and sentence construction. Load before drafting or editing any prose, and check every draft against the DO NOT list — Erik catalogued these from real drafts and they are firm.
+description: "Erik's prose style: the LLM-isms he bans, plus register, voice, and sentence construction. Load before drafting or editing any prose, and check every draft against the DO NOT list — Erik catalogued these from real drafts and they are firm."
 ---
 
 # Erik's prose style

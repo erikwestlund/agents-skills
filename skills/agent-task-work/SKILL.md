@@ -1,6 +1,6 @@
 ---
 name: agent-task-work
-description: How to work as a task executor under an orchestrator: implement the whole brief, run focused tests, answer review, and hand off to 0-reconcile. Load when an orchestrator hands you a brief, or when your Polyscope workspace name has a "tasks" role.
+description: "How to work as a task executor under an orchestrator: implement the whole brief, run focused tests, answer review, and hand off to 0-reconcile. Load when an orchestrator hands you a brief, or when your Polyscope workspace name has a \"tasks\" role."
 ---
 
 # Task work

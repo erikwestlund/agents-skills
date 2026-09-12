@@ -5,6 +5,7 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 
 | Skill | For |
 |---|---|
+| `polyscope-workflow` | Route a Polyscope session to its communication channel and role skill. |
 | `agent-orchestration` | The Opus orchestrator: roles, setup, dispatch, briefs. |
 | `agent-reconcile` | The single Opus `0-reconcile` agent: merge, test, clean history, push. |
 | `agent-plan-review` | The single Fable `0-plan-review` agent: write plans, review commits. |

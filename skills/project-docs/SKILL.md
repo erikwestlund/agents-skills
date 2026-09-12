@@ -1,6 +1,6 @@
 ---
 name: project-docs
-description: Where to keep lasting project notes, with dated work logs in docs/work and notes for whoever picks up the work in docs/notes. Load when recording progress, decisions, or findings, or when pausing or ending work someone else will continue.
+description: Keep dated project work logs in docs/work and pickup notes in docs/notes. Load when recording lasting progress, decisions, findings, or handoff state.
 ---
 
 # Project docs

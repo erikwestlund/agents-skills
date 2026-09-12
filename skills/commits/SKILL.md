@@ -1,6 +1,6 @@
 ---
 name: commits
-description: How to write commit messages and pull requests. Never credit an agent, because the user is the author and is responsible for the code, and use a loose conventional-commit style that puts clarity first. Load before writing any commit message or pull request description.
+description: Write commit messages and pull request descriptions without agent attribution, using a loose conventional-commit style. Load before drafting either one.
 ---
 
 # Commits

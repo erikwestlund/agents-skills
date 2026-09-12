@@ -1,6 +1,6 @@
 ---
 name: plan-review-communication
-description: How orchestrators request plans and reviews from the single 0-plan-review workspace, and how it replies. Load when you need a plan or a review from the plan/review agent, or when you are that agent handling requests.
+description: Exchange plan and review requests with the single 0-plan-review workspace. Load when sending or handling those requests.
 ---
 
 # Talking to plan/review

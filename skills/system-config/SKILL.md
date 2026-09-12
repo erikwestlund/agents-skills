@@ -1,6 +1,6 @@
 ---
 name: system-config
-description: Change this Mac only through the ~/System repo, using its Ansible roles and config/ directory, never by hand. Load before installing or removing packages or apps, or editing dotfiles, shell config, aliases, macOS preferences, LaunchAgents, or anything else on the machine outside a project.
+description: Manage this Mac only through the ~/System Ansible repository. Load before changing packages, apps, dotfiles, shell configuration, macOS preferences, LaunchAgents, or other machine configuration.
 ---
 
 # System config

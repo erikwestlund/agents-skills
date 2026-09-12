@@ -1,6 +1,6 @@
 ---
 name: agent-reconcile
-description: How to work as the reconcile agent: merge approved work, resolve conflicts, run the full suite, keep the history clean, and push. Load when your Polyscope workspace name starts with "0-reconcile", or when you're asked to act as the integrator.
+description: "How to work as the reconcile agent: merge approved work, resolve conflicts, run the full suite, keep the history clean, and push. Load when your Polyscope workspace name starts with \"0-reconcile\", or when you're asked to act as the integrator."
 ---
 
 # Reconcile agent

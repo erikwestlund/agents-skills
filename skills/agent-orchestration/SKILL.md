@@ -1,6 +1,6 @@
 ---
 name: agent-orchestration
-description: How to orchestrate multi-agent work across separate workspaces (usually Polyscope worktrees): dispatch briefs from a plan, relay reviews, and track tasks. Load when you are the orchestrator or are setting up the agents for a piece of work.
+description: "How to orchestrate multi-agent work across separate workspaces (usually Polyscope worktrees): dispatch briefs from a plan, relay reviews, and track tasks. Load when you are the orchestrator or are setting up the agents for a piece of work."
 ---
 
 # Orchestration

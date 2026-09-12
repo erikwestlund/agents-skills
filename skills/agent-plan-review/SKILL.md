@@ -1,6 +1,6 @@
 ---
 name: agent-plan-review
-description: How to work as the plan/review agent, the single 0-plan-review workspace that writes plans for orchestrators and reviews task agents' commits against them. Load when your Polyscope workspace name starts with "0-plan-review", or when you're asked to act as the plan/review agent.
+description: Write plans for orchestrators and review task commits in the single 0-plan-review workspace. Load when assigned that role.
 ---
 
 # Plan/review agent
