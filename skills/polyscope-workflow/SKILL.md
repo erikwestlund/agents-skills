@@ -19,7 +19,7 @@ which is normally the current git branch:
 - `0-plan-review-*`: load `agent-plan-review`.
 - `0-reconcile-*`: load `agent-reconcile`.
 - `*-tasks-*`, or a brief assigning task execution: load `agent-task-work`.
-- An explicit request to reuse the workspace: load `repurpose-workspace`, then
+- An explicit request to reuse the workspace: load `agent-repurpose-workspace`, then
   route again under the new role.
 
 If the harness does not provide the workspace name, read it with

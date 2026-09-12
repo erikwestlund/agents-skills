@@ -61,7 +61,7 @@ The app's own rename action does the same thing. If you run only
   agent to choose its own branch name, but an assigned name takes precedence.
 - **Never rename again after that**, because other agents address you by that
   name. The one exception is repurposing the workspace for a new role, as
-  `repurpose-workspace` describes.
+  `agent-repurpose-workspace` describes.
 - **Nothing on disk moves.** The checkout folder keeps the bare worktree name,
   and so does anything built from it, such as preview URLs.
 - Sign messages and name context files with your branch, which is the full

@@ -23,7 +23,7 @@ them. Implement all of it. If your context gets heavy, reset it as
 - **Take your name.** If the brief assigns a workspace name, rename to it
   first by updating both the git branch and Polyscope's database row, as
   `agent-communication` shows. After that, never rename again unless you're
-  repurposed (see `repurpose-workspace`).
+  repurposed (see `agent-repurpose-workspace`).
 - **Update to the base** the first brief names, usually `origin/main` or
   `0-reconcile`'s branch.
 - Read the whole brief: the files you own, the acceptance criteria, and the
