@@ -1,6 +1,6 @@
 ---
 name: agent-plan-review
-description: Write plans for orchestrators and review task commits in the single 0-plan-review workspace. Load when assigned that role.
+description: "Write plans for orchestrators and review task commits in the single 0-plan-review workspace. Load when assigned that role."
 ---
 
 # Plan/review agent

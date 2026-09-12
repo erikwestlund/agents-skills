@@ -1,6 +1,6 @@
 ---
 name: context-reset
-description: How to reset an agent's context without losing its place. Load when context is getting heavy, before a /clear, or when the user asks to reset, clear, or restart a session.
+description: "How to reset an agent's context without losing its place. Load when context is getting heavy, before a /clear, or when the user asks to reset, clear, or restart a session."
 ---
 
 # Context reset
@@ -29,7 +29,7 @@ compaction warnings) or the user asks, reset it instead of pushing on.
    ```
    You are 1-import-2-tasks-brave-otter, a task agent. Load the
    agent-task-work skill. Read
-   /Users/erik/.polyscope/clones/8389bf53/brave-otter/docs/notes/2026-09-11-import-resume.md,
+   /absolute/path/to/worktree/docs/notes/2026-09-11-import-resume.md,
    then check git status and the log. Check in with your orchestrator,
    1-import-1-orchestrator-wistful-pony, before continuing from the note's
    next step.

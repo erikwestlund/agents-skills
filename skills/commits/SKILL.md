@@ -1,6 +1,6 @@
 ---
 name: commits
-description: Write commit messages and pull request descriptions without agent attribution, using a loose conventional-commit style. Load before drafting either one.
+description: "Write commit messages and pull request descriptions without agent attribution, using a loose conventional-commit style. Load before drafting either one."
 ---
 
 # Commits

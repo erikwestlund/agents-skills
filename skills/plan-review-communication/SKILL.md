@@ -1,6 +1,6 @@
 ---
 name: plan-review-communication
-description: Exchange plan and review requests with the single 0-plan-review workspace. Load when sending or handling those requests.
+description: "Exchange plan and review requests with the single 0-plan-review workspace. Load when sending or handling those requests."
 ---
 
 # Talking to plan/review
@@ -16,11 +16,12 @@ second.
 
 ## Channel
 
-Message it directly: find it with `ListAgents`, then use `SendMessage`. If you
-can't, use two files in the shared `.context/` directory:
+Select the transport through `agent-communication`. With direct messaging,
+send the request to the plan/review workspace. With file-based communication,
+use two files in the shared `.context/` directory:
 `<requester>.plan-review-request.md`, which you write, and
 `<requester>.plan-review-reply.md`, which it writes. Watch the reply file as
-`agent-communication` describes.
+the selected transport reference describes.
 
 ## Requests
 
@@ -32,9 +33,9 @@ absolute paths for everything.
 To: 0-plan-review-keen-heron
 From: 1-import-1-orchestrator-wistful-pony
 Request: REVIEW
-Plan: /Users/erik/.polyscope/clones/8389bf53/wistful-pony/docs/work/2026-09-11-import-plan.md
-Brief: /Users/erik/Projects/pequod/.context/1-import-2-tasks-brave-otter.brief.md
-Worktree: /Users/erik/.polyscope/clones/8389bf53/brave-otter
+Plan: /absolute/path/to/orchestrator/docs/work/2026-09-11-import-plan.md
+Brief: /absolute/path/to/project/.context/1-import-2-tasks-brave-otter.brief.md
+Worktree: /absolute/path/to/task-worktree
 Commits: a1b2c3d..e4f5a6b
 Round: 2. Comments 1-4 from round 1; the task agent says all are fixed.
 ```

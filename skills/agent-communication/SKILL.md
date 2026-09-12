@@ -1,6 +1,6 @@
 ---
 name: agent-communication
-description: How orchestrator, plan/review, task, and reconcile agents communicate with each other. Load when starting or joining multi-agent work, sending a brief, handoff, review, or merge request, or naming a Polyscope workspace.
+description: "How orchestrator, plan/review, task, and reconcile agents communicate with each other. Load when starting or joining multi-agent work, sending a brief, handoff, review, or merge request, or naming a Polyscope workspace."
 ---
 
 # Agent communication
@@ -78,53 +78,32 @@ spawned them. There are two shared workspaces:
 - **`0-reconcile`**: task agents send it merge requests once their work is
   approved. It replies to the task agent and to that agent's orchestrator.
 
-## Channels
+## Select The Transport
 
-1. **Direct messages** when both sides are Claude Code (preferred): find the
-   agent with `ListAgents`, then use `SendMessage`.
-2. **Context files** when agents can't message each other, e.g. other or
-   mixed providers.
-3. **Human relay** when a person has to carry the message.
+Select the transport from the tools available in the current session. A model
+or provider name does not establish which communication features the harness
+provides.
 
-## Human relay
+- When `ListAgents` and `SendMessage` are available, read
+  [`references/claude-code.md`](references/claude-code.md).
+- When another harness provides equivalent cross-session tools, use its direct
+  messaging facility. Apply the same addressing and fallback rules described
+  in the Claude Code reference.
+- When direct messaging is unavailable, the recipient cannot be reached, or
+  the agents use incompatible harnesses, read
+  [`references/file-based.md`](references/file-based.md).
 
-**Always** put the whole message in one code block the user can copy and
-paste, and **always** give absolute paths for every file it mentions. The
-receiving agent is in another worktree and can't resolve relative paths.
+Read only the reference for the selected transport. If direct messaging fails,
+load the file-based reference and continue there.
 
-````
-To: 1-import-2-tasks-brave-otter
-From: 1-import-1-orchestrator-wistful-pony
-Status: CHANGES REQUESTED
-Review: /Users/erik/Projects/pequod/.context/1-import-2-tasks-brave-otter.brief.md
-Address all 4 comments, rerun the focused tests, then post READY FOR REVIEW in
-/Users/erik/Projects/pequod/.context/1-import-2-tasks-brave-otter.handoff.md
-````
+## Message Contract
 
-## Context files
+Identify every message with its sender, recipient, and status or request. Use
+the workspace names defined above. Keep a message self-contained when the
+recipient cannot inspect the sender's session.
 
-Context files carry live messages between agents. Lasting project notes go in
-`docs/` instead (see project-docs).
-
-- The orchestrator names one shared directory by absolute path in the brief,
-  usually the main checkout's `.context/`. Other worktrees can't see a
-  worktree's own `.context/`.
-- Each task gets two files, named after the task agent's workspace. Each side
-  writes only its own file and watches the other's:
-  - `<name>.brief.md`, written by the orchestrator: the brief, reviews, and
-    approval.
-  - `<name>.handoff.md`, written by the task agent: handoffs, questions, and
-    replies.
-- Merge requests use `<name>.merge-request.md`, written by the task agent, and
-  `<name>.merge-reply.md`, written by reconcile.
-- Append each entry under a dated, signed heading that starts with a status:
-  `READY FOR REVIEW`, `CHANGES REQUESTED`, `BLOCKED`, `QUESTION`, `APPROVED`,
-  `MERGE`, `MERGED`, `CONFLICT`, or `FAILED`.
-
-**Watch the other side's file** so you resume without being nudged. In Claude
-Code, use `Monitor` with an until-loop that exits on a new status line.
-Elsewhere, poll every 30-60 seconds. Stop at `APPROVED` or `MERGED`, or when
-told.
+Use these statuses consistently: `READY FOR REVIEW`, `CHANGES REQUESTED`,
+`BLOCKED`, `QUESTION`, `APPROVED`, `MERGE`, `MERGED`, `CONFLICT`, and `FAILED`.
 
 ## Handoffs
 
@@ -150,8 +129,8 @@ To: 0-reconcile-calm-lynx
 From: 1-import-2-tasks-brave-otter
 Request: MERGE
 Orchestrator: 1-import-1-orchestrator-wistful-pony
-Plan: /Users/erik/.polyscope/clones/8389bf53/wistful-pony/docs/work/2026-09-11-import-plan.md
-Worktree: /Users/erik/.polyscope/clones/8389bf53/brave-otter
+Plan: /absolute/path/to/orchestrator/docs/work/2026-09-11-import-plan.md
+Worktree: /absolute/path/to/task-worktree
 Branch: 1-import-2-tasks-brave-otter
 Commits: a1b2c3d..e4f5a6b
 Approved: round 2, by 0-plan-review-keen-heron

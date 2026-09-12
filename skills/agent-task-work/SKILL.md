@@ -31,10 +31,9 @@ them. Implement all of it. If your context gets heavy, reset it as
 
 ## Communicate
 
-Message the orchestrator directly with `SendMessage` when you can. Otherwise,
-write to your handoff file and watch the brief file for replies. If the user
-has to carry a message, give it as one copyable code block with absolute paths.
-Details: `agent-communication`.
+Use the transport selected by `agent-communication`. Send messages to the
+orchestrator through the direct channel, the shared handoff and brief files, or
+human relay as that skill directs.
 
 ## Finish the whole task
 

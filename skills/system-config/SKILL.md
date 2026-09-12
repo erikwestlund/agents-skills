@@ -1,6 +1,6 @@
 ---
 name: system-config
-description: Manage this Mac only through the ~/System Ansible repository. Load before changing packages, apps, dotfiles, shell configuration, macOS preferences, LaunchAgents, or other machine configuration.
+description: "Manage this Mac only through the ~/System Ansible repository. Load before changing packages, apps, dotfiles, shell configuration, macOS preferences, LaunchAgents, or other machine configuration."
 ---
 
 # System config
@@ -11,10 +11,9 @@ A project's own dependencies, such as renv or npm packages inside a project,
 aren't system changes.
 
 **First, check whether an agent is already running in `~/System`, especially a
-Claude session. If one is, message it directly** (in Claude Code, find it with
-`ListAgents`, then use `SendMessage`). Say what you need changed and why, and
-let it make and deploy the change. If no agent is running, make the change
-yourself as follows:
+Claude session. If one is, contact it through the transport selected by
+`agent-communication`.** Say what you need changed and why, and let it make and
+deploy the change. If no agent is running, make the change yourself as follows:
 
 - Read `~/System/AGENTS.md` and `~/System/README.md` first and follow them.
 - Make the change in the repo: packages and apps go in the Ansible roles, and

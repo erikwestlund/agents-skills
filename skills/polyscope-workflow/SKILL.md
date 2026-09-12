@@ -1,29 +1,14 @@
 ---
 name: polyscope-workflow
-description: Route a Polyscope session to its communication channel and role skill. Load when starting, resuming, or changing roles in a Polyscope workspace.
+description: "Route a Polyscope session to its role and supporting skills. Load when starting, resuming, or changing roles in a Polyscope workspace."
 ---
 
 # Polyscope Workflow
 
 Use this router once when starting, resuming, or repurposing a Polyscope
-workspace. It selects the communication channel and the role skill. The role
-skill supplies the detailed workflow.
-
-## Identify The Harness
-
-Use the tools available in the current session to select a channel:
-
-- In Claude Code, prefer direct communication when `ListAgents` and
-  `SendMessage` are available. Use `ListAgents` to find the named session, then
-  communicate with `SendMessage`.
-- In another harness with equivalent cross-session tools, use its direct
-  messaging facility.
-- When direct messaging is unavailable or the recipient cannot be reached, use
-  the shared `.context/` files or human relay described in
-  `agent-communication`.
-
-The available tools determine the channel. A provider or model name alone does
-not establish which communication features the session has.
+workspace. It selects the role skill. The role skill supplies the detailed
+workflow, and `agent-communication` selects the available transport when agents
+need to communicate.
 
 ## Identify The Role
 

@@ -1,6 +1,6 @@
 ---
 name: repurpose-workspace
-description: How to repurpose an agent's workspace for a new role or task. Load when the user or an orchestrator asks you to take on a new role or task in your existing workspace, or to reuse it.
+description: "How to repurpose an agent's workspace for a new role or task. Load when the user or an orchestrator asks you to take on a new role or task in your existing workspace, or to reuse it."
 ---
 
 # Repurpose a workspace
@@ -37,7 +37,7 @@ again.
    ```
    You are 1-theme-2-tasks-brave-otter, a task agent. Load the
    agent-task-work skill. Read your brief at
-   /Users/erik/Projects/pequod/.context/1-theme-2-tasks-brave-otter.brief.md.
+   /absolute/path/to/project/.context/1-theme-2-tasks-brave-otter.brief.md.
    Check in with your orchestrator, 1-theme-1-orchestrator-amber-fox, before
    starting.
    ```

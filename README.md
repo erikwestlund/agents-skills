@@ -5,18 +5,17 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 
 | Skill | For |
 |---|---|
-| `polyscope-workflow` | Route a Polyscope session to its communication channel and role skill. |
+| `polyscope-workflow` | Route a Polyscope session to its role and supporting skills. |
 | `agent-orchestration` | The Opus orchestrator: roles, setup, dispatch, briefs. |
 | `agent-reconcile` | The single Opus `0-reconcile` agent: merge, test, clean history, push. |
 | `agent-plan-review` | The single Fable `0-plan-review` agent: write plans, review commits. |
 | `plan-review-communication` | How to request plans and reviews from `0-plan-review`, and its replies. |
 | `agent-task-work` | Task agents implementing a brief. |
-| `agent-communication` | Workspace names, channels, context files, handoffs. |
+| `agent-communication` | Shared agent protocol with direct and file-based transports. |
 | `context-reset` | Reset a long session: a resume note, a block to paste back in, and check-ins. |
 | `repurpose-workspace` | Reuse a workspace for a new role: wrap up, rename, reset. |
 | `commits` | No agent attribution in commits and PRs; loose conventional-commit style. |
-| `writing` | House writing conventions for every project, starting with the Oxford comma. |
-| `prose-style` | Erik's prose style: banned LLM-isms, register, voice, sentence construction. |
+| `writing` | House prose style and writing conventions. |
 | `project-docs` | Dated work logs in `docs/work/`, pickup notes in `docs/notes/`. |
 | `system-config` | Change the Mac only through `~/System`, never by hand. |
 | `r-stats` | Statistical work in R: framework, readability, notebooks, scripts, plots. |
