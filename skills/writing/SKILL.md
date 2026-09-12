@@ -71,8 +71,8 @@ Treat every pattern below as a firm ban.
   occasionally.
 - **Relationship or defensive framing toward the reader.** Describe the
   operation factually.
-- **Metaphors for technical or statistical concepts.** Use the actual terms.
-  Reviewers are reviewers, samples are samples, and a rating is never a lever.
+- **Metaphors for technical or statistical concepts.** Use the domain's actual
+  terms.
 - **Fragment-style drama.** Write complete sentences.
 
 ## Sentence Construction
