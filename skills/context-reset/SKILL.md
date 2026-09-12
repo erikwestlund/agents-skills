@@ -1,6 +1,6 @@
 ---
 name: context-reset
-description: How to reset an agent's context without losing its place. The agent writes a resume note with absolute paths and gives the user a block to paste into the cleared session, including whom to check in with. Load when context is getting heavy, before a /clear, or when the user asks to reset, clear, or restart a session.
+description: How to reset an agent's context without losing its place. Load when context is getting heavy, before a /clear, or when the user asks to reset, clear, or restart a session.
 ---
 
 # Context reset

@@ -1,6 +1,6 @@
 ---
 name: agent-orchestration
-description: How to orchestrate multi-agent work. An Opus orchestrator dispatches and tracks, one Fable plan/review workspace (0-plan-review) plans and reviews, task agents on whatever model fits implement, and one Opus reconcile workspace (0-reconcile) merges and pushes. Covers roles and models, planning, splitting work, naming Polyscope workspaces, briefs, nested orchestrators, and review. Load when delegating work across separate workspaces (usually Polyscope worktrees), setting up the agents for a piece of work, or starting an orchestrator workspace.
+description: How to orchestrate multi-agent work across separate workspaces (usually Polyscope worktrees): dispatch briefs from a plan, relay reviews, and track tasks. Load when you are the orchestrator or are setting up the agents for a piece of work.
 ---
 
 # Orchestration

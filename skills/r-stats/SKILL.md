@@ -1,6 +1,6 @@
 ---
 name: r-stats
-description: How to do statistical work in R, covering framework package projects, readable code, functions, Quarto notebooks, scripts, ggplot themes, and adversarial checks. Load before writing or reviewing R analysis code, notebooks, or plots.
+description: How to do statistical work in R: readable code, functions, Quarto notebooks, scripts, and plots. Load before writing or reviewing R analysis code, notebooks, or plots.
 ---
 
 # Statistical work in R

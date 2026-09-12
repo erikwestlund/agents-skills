@@ -1,6 +1,6 @@
 ---
 name: writing
-description: Erik's house writing conventions for every project, starting with the Oxford (serial) comma. Load before writing or editing any user-facing copy, UI labels, docs, plans, briefs, or commit messages.
+description: Erik's house writing conventions, starting with the Oxford (serial) comma. Load before writing or editing any user-facing copy, UI labels, docs, plans, briefs, or commit messages.
 ---
 
 # Writing

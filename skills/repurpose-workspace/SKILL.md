@@ -1,6 +1,6 @@
 ---
 name: repurpose-workspace
-description: How to repurpose an agent's workspace for a new role or task. The agent wraps up the old work, renames the workspace, and resets its context into the new role. Load when the user or an orchestrator asks you to take on a new role or task in your existing workspace, or to reuse or repurpose a workspace.
+description: How to repurpose an agent's workspace for a new role or task. Load when the user or an orchestrator asks you to take on a new role or task in your existing workspace, or to reuse it.
 ---
 
 # Repurpose a workspace

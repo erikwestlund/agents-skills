@@ -1,6 +1,6 @@
 ---
 name: agent-communication
-description: How orchestrator, plan/review, task, and reconcile agents communicate. Covers naming Polyscope workspaces, who talks to whom, context files, handoffs, and merge requests. Load when starting or joining multi-agent work, sending a brief, handoff, review, or merge request, or naming a Polyscope workspace.
+description: How orchestrator, plan/review, task, and reconcile agents communicate with each other. Load when starting or joining multi-agent work, sending a brief, handoff, review, or merge request, or naming a Polyscope workspace.
 ---
 
 # Agent communication
