@@ -35,10 +35,10 @@ again.
    absolute path, and the agents to check in with:
 
    ```
-   You are 1-theme-2-tasks-brave-otter, a task agent. Load the
+   You are 1-theme-3-tasks-brave-otter, a task agent. Load the
    agent-task-work skill. Read your brief at
-   /absolute/path/to/project/.context/1-theme-2-tasks-brave-otter.brief.md.
-   Check in with your orchestrator, 1-theme-1-orchestrator-amber-fox, before
+   /absolute/path/to/project/.context/1-theme-3-tasks-brave-otter.brief.md.
+   Check in with your orchestrator, 1-theme-2-orchestrator-amber-fox, before
    starting.
    ```
 

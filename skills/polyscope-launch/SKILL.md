@@ -42,11 +42,12 @@ reconciles its own change. When the user asks to start an orchestrated team,
 load `agent-based-polyscope-launching` and `polyscope-team-launch`, then use
 `agent-orchestration` inside each group.
 
-The named work units are planning input. Ask the planner to check their
-boundaries and dependencies before dispatching task agents. Use isolated
-workspaces unless the user explicitly requests direct edits. Select direct
-messages or context files from the actual harness capabilities; `Claude Code`
-in the request identifies the agent runtime, not a required transport.
+The named work units identify dormant task groups; they do not authorize work.
+Only after Erik directly messages a planner may it check boundaries and
+dependencies, create a plan, and activate its group. Use isolated workspaces
+unless the user explicitly requests direct edits. Select direct messages or
+context files from the actual harness capabilities; `Claude Code` in the
+request identifies the agent runtime, not a required transport.
 
 For example:
 

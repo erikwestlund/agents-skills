@@ -13,8 +13,10 @@ context gets heavy, reset it as `context-reset` describes.
 
 If your activation brief says that you are waiting for an orchestrator's
 plan-derived task brief, do exactly that: load this skill, confirm your
-workspace name and model, then wait. Do not inspect or edit the project merely
-to look busy. Start the workflow below only after the brief arrives.
+workspace name and model, orient from local instructions and project structure,
+and check in with your orchestrator if useful. Do not create work artifacts,
+edit code, run tests, commit, or launch subagents. Start the workflow below
+only after the human-authorized planner and orchestrator provide the brief.
 
 ## Before starting
 

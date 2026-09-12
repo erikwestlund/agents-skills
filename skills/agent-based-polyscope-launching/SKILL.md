@@ -17,14 +17,21 @@ stop after only `0-reconcile` and group orchestrators.
 
 For each group `N`, create all three roles:
 
-1. `N-<group>-plan-review-…` on the planner model.
-2. `N-<group>-orchestrator-…` on the executor model.
-3. `N-<group>-tasks-…` on the executor model.
+1. `N-<group>-1-plan-review-…` on the planner model.
+2. `N-<group>-2-orchestrator-…` on the executor model.
+3. `N-<group>-3-tasks-…` on the executor model.
+
+The number after the group name is a sorting sequence, not a task identifier:
+plan/review is always `1`, orchestrator is always `2`, and tasks begin at `3`.
+Assign extra task workers `4`, `5`, and onward. Preserve this sequence so the
+Polyscope sidebar reads plan → orchestrate → execute.
 
 For two groups, this is seven workspaces: `0-reconcile` plus three roles for
 each group. Use `ps launch <project> -m <model> "<activation brief>"` for each
-one. Rename each workspace according to `agent-communication` as soon as its
-brief runs.
+one. Every activation brief must begin: “First, rename this workspace to
+`<assigned branch>` by updating both the git branch and Polyscope database row
+as `agent-communication` describes. Do this before any other action.” Do not
+rely on a general naming reference later in the prompt.
 
 Record the runtime alongside every workspace. Models with a managed Claude
 Code provider profile (`claude_*`, `ds_*`, `fw_*`, `zai_*`) use Claude Code by
@@ -33,20 +40,33 @@ OpenAI workspace, make the activation brief self-contained and do not instruct
 it to run Claude Code, select a Claude profile, load a Claude-only skill, or
 use Claude-specific messaging. Polyscope workspace messages work for both.
 
-## Activate every role
+## Start dormant, not working
 
 Every workspace gets an initial, role-specific message. A created workspace
-without an activation brief is not launched.
+without an activation brief is not launched. The initial message is a
+**readiness message**, not permission to begin the group work.
 
-- **`0-reconcile`:** load `agent-reconcile`; establish the integration branch;
-  wait for approved group merge requests; do not plan or implement.
-- **Planner/reviewer:** load `agent-plan-review`; inspect the group scope;
-  write its plan; send `PLAN READY` and the absolute plan path back to this
-  launch agent.
-- **Orchestrator:** load `agent-orchestration`; wait for the named planner's
-  `PLAN READY`; do not write a substitute plan or dispatch guessed tasks.
-- **Task worker:** load `agent-task-work`; wait for the named orchestrator's
-  plan-derived task brief; do not edit while waiting.
+Put this rule verbatim in every initial message: “You are dormant until Erik
+directly messages your group's planner to begin. You may rename, load your
+role and communication skills, read local instructions and project structure,
+and check in with named partners. Do not create a plan or task brief, edit
+code, run tests, dispatch work, commit, merge, or push.”
+
+Only a direct human message to the planner authorizes the planner to create the
+group plan. The planner's resulting `PLAN READY` then authorizes its
+orchestrator to brief its waiting worker. Do not turn a launch brief, a status
+check, or a partner check-in into work authorization.
+
+- **`0-reconcile`:** load `agent-reconcile`; orient and check in with group
+  orchestrators if useful; wait for approved merge requests.
+- **Planner/reviewer:** load `agent-plan-review`; rename; orient; and check in
+  with its orchestrator and task worker. Wait for Erik's direct plan request
+  before creating a plan.
+- **Orchestrator:** load `agent-orchestration`; orient and check in with its
+  planner and worker. Wait for the planner's human-authorized `PLAN READY`;
+  do not write a substitute plan or dispatch guessed tasks.
+- **Task worker:** load `agent-task-work`; orient and check in with its
+  orchestrator. Wait for the plan-derived task brief; do not edit or test.
 
 The planner model belongs only to planner/review. When the request says
 “planners run Opus; the rest run DeepSeek Flash,” use `claude_opus` for the
@@ -55,15 +75,20 @@ and two task workers.
 
 ## Carry the handoffs
 
-Creating the workspaces is only the first half of this role. Keep using the
-available Polyscope message channel after they are up:
+Creating the dormant workspaces is only the first half of this role. After
+Erik activates a planner, keep using the available Polyscope message channel:
 
-1. On `PLAN READY`, send the plan path to that group's orchestrator.
-2. The orchestrator turns the plan into the task-worker brief and sends it to
-   that group's waiting worker.
-3. If the plan needs more than one worker, the orchestrator launches and
-   briefs extra `N-<group>-tasks-…` workspaces on the executor model.
-4. After review approval, the orchestrator sends the merge request to
+1. Before every message, apply `agent-communication`'s recipient-verification
+   rule. Open the recipient's actual worktree; confirm its current branch,
+   `.context/` state, and relevant plan/brief are for the same group. Never
+   address a workspace from its launch order or animal name alone.
+2. On `PLAN READY`, send the plan path to that group's verified orchestrator.
+3. The orchestrator turns the plan into the task-worker brief and sends it to
+   that group's verified waiting worker.
+4. If the plan needs more than one worker, the orchestrator launches and
+   briefs extra `N-<group>-4-tasks-…`, `N-<group>-5-tasks-…`, and later
+   workspaces on the executor model.
+5. After review approval, the orchestrator sends the merge request to
    `0-reconcile`.
 
 Use the direct-messaging facility the harness actually provides. In Polyscope,
@@ -77,6 +102,5 @@ it shares the same model or provider.
 
 Report the named workspaces and their state, not a generic “team is up.” A
 complete first report for two groups has seven rows: reconcile waiting, two
-planners planning, two orchestrators waiting for plans, and two workers
-waiting for briefs. Continue the launch role until those handoffs occur or a
-specific question blocks them.
+planners dormant, two orchestrators dormant, and two workers dormant. Do not
+claim that planning or implementation has begun until Erik activates a planner.

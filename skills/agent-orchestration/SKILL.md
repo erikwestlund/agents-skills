@@ -36,9 +36,9 @@ actual harness capabilities, as `agent-communication` describes.
 
 | Role | Workspace | Model | Does | Skill |
 |---|---|---|---|---|
-| Group plan/review | `N-<group>-…-plan-review-…` | Planner model | Writes one group plan and reviews that group’s completed work. | `agent-plan-review` |
-| Group orchestrator | `N-<group>-…-orchestrator-…` | Executor model | Turns the approved plan into briefs, dispatches workers, and tracks the group. | this one |
-| Task executor | `N-<group>-…-tasks-…`, as many as the plan needs | Executor model | Implements one brief for its group. | `agent-task-work` |
+| Group plan/review | `N-<group>-1-plan-review-…` | Planner model | Writes one group plan and reviews that group’s completed work. | `agent-plan-review` |
+| Group orchestrator | `N-<group>-2-orchestrator-…` | Executor model | Turns the approved plan into briefs, dispatches workers, and tracks the group. | this one |
+| Task executor | `N-<group>-3-tasks-…`, then `4+` as the plan needs | Executor model | Implements one brief for its group. | `agent-task-work` |
 | Reconcile | `0-reconcile-…`, only one when several groups exist | Executor model | Merges approved groups, resolves conflicts, runs the full suite, keeps the history clean, and pushes. | `agent-reconcile` |
 
 For example, “planners run Opus; the rest run DeepSeek Flash” means
@@ -71,6 +71,12 @@ or dispatch workers from guesses.
 
 **Check the shared workspace.** `polyscope-team-launch` creates
 `0-reconcile` first for a multi-group initiative. Never start a second.
+
+**Remain dormant until planning is human-authorized.** At team creation, you
+may orient by reading role/local instructions and checking in with your
+planner, task worker, and `0-reconcile`. Do not write plans or briefs, inspect
+code for implementation, run tests, edit files, or dispatch work. Proceed only
+after your planner receives Erik's direct request and sends `PLAN READY`.
 
 ## Split and dispatch
 

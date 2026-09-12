@@ -21,13 +21,15 @@ lines without names, context files, or handoff formats.
 Polyscope names each worktree with an adjective and an animal
 (`blissful-woodpecker`). Prefix it so workspaces sort and read clearly:
 
-`{group}-{surface}-{agent}-{work}-{worktree}`
+`{group}-{surface}-{sequence}-{work}-{worktree}`
 
 - **group**: a number that orders task groups. `0` is reserved for
   reconciliation. A single-task initiative can use `0` for its task workspace;
   task groups start at `1` when more work is added.
 - **surface**: the problem area (`import`, `theme`).
-- **agent**: a number within the topic, if there are several agents.
+- **sequence**: a sorting position within the group. It is not a task ID, but
+  it is required: `1` is plan/review, `2` is orchestrator, and task workers
+  begin at `3` and increment from there.
 - **work**: the role, if roles differ (`orchestrator`, `plan-review`,
   `reconcile`, `tasks`, `copy`).
 - **worktree**: the Polyscope name, unchanged.
@@ -37,10 +39,15 @@ Drop segments that add nothing.
 ```
 0-reconcile-calm-lynx
 0-sign-up-tasks-quick-otter
-1-import-1-orchestrator-wistful-pony
-1-import-2-tasks-brave-otter
-2-demos-1-plan-review-amber-fox
+1-import-1-plan-review-amber-fox
+1-import-2-orchestrator-wistful-pony
+1-import-3-tasks-brave-otter
+2-demos-1-plan-review-keen-heron
 ```
+
+The sequence exists so the sidebar reads top to bottom as plan, orchestrate,
+then execute. Preserve it exactly: do not use `1` for an orchestrator, do not
+start task workers below `3`, and assign extra workers `4`, `5`, and onward.
 
 The workspace name is the git branch. Polyscope displays it from the `branch`
 column of its `worktrees` table in `~/.polyscope/polyscope.db`. The
@@ -76,6 +83,27 @@ workspace:
 
 - **`0-reconcile`**: receives approved group merge requests when more than one
   task group exists. A single task reconciles its own change.
+
+## Verify the recipient before messaging
+
+Before every cross-workspace message, verify the recipient from its actual
+worktree—not its sidebar position, bare animal name, or a remembered launch
+order. This prevents a correct brief from reaching the wrong agent.
+
+1. Resolve the Polyscope workspace record to its absolute local path.
+2. Run `git -C <path> branch --show-current` and confirm the branch names the
+   intended group and role.
+3. Inspect the recipient's relevant local state: its `.context/` files and the
+   plan, brief, or handoff it is supposed to receive or act on. Confirm its
+   current role and state match the message—for example, the planner is the
+   planner for that group, the orchestrator is waiting for that plan, or the
+   task worker is waiting for that orchestrator's brief.
+4. Confirm every absolute path and workspace name in the outgoing message
+   belongs to that same group.
+
+If any check disagrees, do not send. Find the correct worktree or ask the
+sender/parent to resolve the identity. Repeat this check when a workspace has
+been renamed, repurposed, reset, or has received a new assignment.
 
 ## Select The Transport
 
@@ -126,14 +154,14 @@ it reconciles its own change.
 
 ```
 To: 0-reconcile-calm-lynx
-From: 1-import-2-tasks-brave-otter
+From: 1-import-3-tasks-brave-otter
 Request: MERGE
-Orchestrator: 1-import-1-orchestrator-wistful-pony
+Orchestrator: 1-import-2-orchestrator-wistful-pony
 Plan: /absolute/path/to/planner-worktree/docs/work/2026-09-11-import-plan.md
 Worktree: /absolute/path/to/task-worktree
-Branch: 1-import-2-tasks-brave-otter
+Branch: 1-import-3-tasks-brave-otter
 Commits: a1b2c3d..e4f5a6b
-Approved: round 2, by 1-import-1-plan-review-keen-heron
+Approved: round 2, by 1-import-1-plan-review-amber-fox
 Tests: the focused tests run, and their results
 ```
 

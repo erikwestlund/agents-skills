@@ -6,7 +6,7 @@ description: "Exchange plan and review requests within one task group. Load when
 # Talking to group plan/review
 
 Each task group can have one plan/review workspace,
-`N-<group>-…-plan-review-<worktree>`. It runs on the planner model. It handles
+`N-<group>-1-plan-review-<worktree>`. It runs on the planner model. It handles
 that group's plan and review. Task agents do not contact it directly.
 
 The team launcher creates one before the group's orchestrator, so every
@@ -32,10 +32,10 @@ absolute paths for everything.
 
 ```
 To: 1-import-1-plan-review-keen-heron
-From: 1-import-1-orchestrator-wistful-pony
+From: 1-import-2-orchestrator-wistful-pony
 Request: REVIEW
 Plan: /absolute/path/to/planner-worktree/docs/work/2026-09-11-import-plan.md
-Brief: /absolute/path/to/project/.context/1-import-2-tasks-brave-otter.brief.md
+Brief: /absolute/path/to/project/.context/1-import-3-tasks-brave-otter.brief.md
 Worktree: /absolute/path/to/task-worktree
 Commits: a1b2c3d..e4f5a6b
 Round: 2. Comments 1-4 from round 1; the task agent says all are fixed.

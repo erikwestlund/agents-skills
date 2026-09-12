@@ -56,6 +56,21 @@ orchestrator to worker. For “planners run Opus; the rest run DeepSeek Flash,�
 planners use `claude_opus` and orchestrators, workers, and reconcile use
 `ds_flash`.
 
+The number after the task-group name is a sorting sequence: `1` is
+plan/review, `2` is orchestrator, and tasks start at `3` (`4+` for added
+workers). It is not a task ID, but it is required so each group reads top to
+bottom in Polyscope.
+
+New teams begin **dormant**. Their initial messages permit orientation and
+partner check-ins only—never planning, code changes, tests, dispatch, commits,
+merges, or pushes. Erik directly messages a planner to authorize the first
+group plan; only its resulting handoff activates the group orchestrator and
+task worker.
+
+Every activation brief begins with its assigned branch name and an instruction
+to rename both the git branch and Polyscope database row before any other work.
+This is mandatory for plan/review workspaces as well as the other roles.
+
 `ps launch` and `ps direct` preapprove Claude Code folder trust for the
 registered workspace before its first agent task. This leaves normal
 tool-permission rules in place.

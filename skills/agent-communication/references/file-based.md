@@ -34,10 +34,10 @@ paste. Use absolute paths for every file because the recipient works in a
 different checkout.
 
 ````
-To: 1-import-2-tasks-brave-otter
-From: 1-import-1-orchestrator-wistful-pony
+To: 1-import-3-tasks-brave-otter
+From: 1-import-2-orchestrator-wistful-pony
 Status: CHANGES REQUESTED
-Review: /absolute/path/to/project/.context/1-import-2-tasks-brave-otter.brief.md
+Review: /absolute/path/to/project/.context/1-import-3-tasks-brave-otter.brief.md
 Address all 4 comments, rerun the focused tests, then post READY FOR REVIEW in
-/absolute/path/to/project/.context/1-import-2-tasks-brave-otter.handoff.md
+/absolute/path/to/project/.context/1-import-3-tasks-brave-otter.handoff.md
 ````

@@ -22,8 +22,8 @@ Thus two groups require seven workspaces, not three:
 
 ```text
 0-reconcile
-1-import-plan-review       1-import-orchestrator       1-import-tasks
-2-registration-plan-review 2-registration-orchestrator 2-registration-tasks
+1-import-1-plan-review       1-import-2-orchestrator       1-import-3-tasks
+2-registration-1-plan-review 2-registration-2-orchestrator 2-registration-3-tasks
 ```
 
 The initial task worker is an assigned, waiting worker. It does not implement
@@ -39,14 +39,14 @@ order:
 1. Launch `0-reconcile-…` with the requested reconcile model. Its brief loads
    `agent-reconcile`, establishes the integration branch, and waits for merge
    requests. It does not implement proposed work units.
-2. Launch one group plan/review workspace per requested work unit, numbered
-   `1`, `2`, and onward. Each loads `agent-plan-review`, writes its group's
-   plan, and replies `PLAN READY` with the absolute plan path.
+2. Launch one group plan/review workspace per requested work unit, named
+   `N-<group>-1-plan-review-…`. Each loads `agent-plan-review`, orients, and
+   waits for Erik's direct message before writing a plan.
 3. Launch one group orchestrator for every group on the executor model. Its
-   activation brief loads `agent-orchestration` and tells it to wait for the
+   name is `N-<group>-2-orchestrator-…`. Its activation brief loads `agent-orchestration` and tells it to wait for the
    named planner's `PLAN READY`; it must not invent a plan or dispatch yet.
 4. Launch one task worker for every group on the executor model. Its activation
-   brief loads `agent-task-work` and tells it to wait for a plan-derived brief
+   name is `N-<group>-3-tasks-…`. Its activation brief loads `agent-task-work` and tells it to wait for a plan-derived brief
    from the named orchestrator; it must not edit while waiting.
 
 Named work units are task groups by default. The planner owns its local plan
@@ -57,23 +57,24 @@ not plan a group.
 
 Do not call the team launched until all `1 + (3 × G)` workspaces have been
 created and received their activation briefs. Then report every workspace's
-role and state: reconcile waiting, planners planning, orchestrators waiting for
-plans, and workers waiting for briefs. Continue monitoring: every `PLAN READY`
-must be delivered to its orchestrator, and the orchestrator must deliver its
-plan-derived brief to the waiting worker. If the plan needs more workers, the
-orchestrator launches them then.
+role and state: reconcile dormant, planners dormant, orchestrators dormant,
+and workers dormant. Do not create a plan, run tests, edit code, dispatch, or
+otherwise begin work until Erik directly messages a planner. After that
+message, every `PLAN READY` must be delivered to its orchestrator, and the
+orchestrator must deliver its plan-derived brief to the waiting worker. If the
+plan needs more workers, the orchestrator launches them then.
 
 For two groups, import and registration, with “planners run Opus; the rest run
 DeepSeek Flash,” the visible progression is:
 
 ```text
 0-reconcile-...                         ds_flash   waiting
-1-import-...-plan-review-...            claude_opus planning
-2-registration-...-plan-review-...      claude_opus planning
-1-import-...-orchestrator-...           ds_flash   waiting for plan
-2-registration-...-orchestrator-...     ds_flash   waiting for plan
-1-import-...-tasks-...                  ds_flash   waiting for brief
-2-registration-...-tasks-...            ds_flash   waiting for brief
+1-import-1-plan-review-...              claude_opus dormant
+2-registration-1-plan-review-...        claude_opus dormant
+1-import-2-orchestrator-...             ds_flash   dormant
+2-registration-2-orchestrator-...       ds_flash   dormant
+1-import-3-tasks-...                    ds_flash   dormant
+2-registration-3-tasks-...              ds_flash   dormant
 ```
 
 Launching only the first three is incomplete. Never report a finished team at
@@ -114,3 +115,18 @@ the communication channel, and its authority boundary. The reconcile brief
 waits. A planner brief requests a plan; an orchestrator brief says which
 planner it waits for; a task-worker brief says which orchestrator it waits for.
 Do not send a generic “work on this group” brief to any role.
+
+The first brief is always dormant. It permits orientation and partner check-ins
+only; it must expressly prohibit planning, task-brief creation, edits, tests,
+dispatch, commits, merges, and pushes. A later direct message from Erik to the
+planner is the only initial authorization to begin a group.
+
+Put the assigned target branch and the full rename instruction first in every
+activation brief. This is especially mandatory for planners: they must rename
+to `N-<group>-1-plan-review-…` before they inspect the repository or plan.
+They update both the git branch and Polyscope database row as
+`agent-communication` specifies.
+
+Before sending an activation brief or later handoff, verify the recipient's
+actual worktree and local state under `agent-communication`. Do not use the
+worktree's animal name or creation order as proof of its role.

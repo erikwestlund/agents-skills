@@ -27,11 +27,11 @@ compaction warnings) or the user asks, reset it instead of pushing on.
    to check in with:
 
    ```
-   You are 1-import-2-tasks-brave-otter, a task agent. Load the
+   You are 1-import-3-tasks-brave-otter, a task agent. Load the
    agent-task-work skill. Read
    /absolute/path/to/worktree/docs/notes/2026-09-11-import-resume.md,
    then check git status and the log. Check in with your orchestrator,
-   1-import-1-orchestrator-wistful-pony, before continuing from the note's
+   1-import-2-orchestrator-wistful-pony, before continuing from the note's
    next step.
    ```
 
