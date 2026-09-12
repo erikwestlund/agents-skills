@@ -15,6 +15,7 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `repurpose-workspace` | Reuse a workspace for a new role: wrap up, rename, reset. |
 | `commits` | No agent attribution in commits and PRs; loose conventional-commit style. |
 | `writing` | House writing conventions for every project, starting with the Oxford comma. |
+| `prose-style` | Erik's prose style: banned LLM-isms, register, voice, sentence construction. |
 | `project-docs` | Dated work logs in `docs/work/`, pickup notes in `docs/notes/`. |
 | `system-config` | Change the Mac only through `~/System`, never by hand. |
 | `r-stats` | Statistical work in R: framework, readability, notebooks, scripts, plots. |
