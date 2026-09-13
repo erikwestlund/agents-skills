@@ -18,6 +18,8 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `context-reset` | Reset a long session: a resume note, a block to paste back in, and check-ins. |
 | `agent-repurpose-workspace` | Reuse a workspace for a new role: wrap up, rename, reset. |
 | `commits` | No agent attribution in commits and PRs; loose conventional-commit style. |
+| `commit-sync` | After a commit, check the branch against `origin` and report how to synchronize it. |
+| `php-testing` | Run PHP tests with installed PAO support and parallel execution where supported. |
 | `writing` | House prose style and writing conventions. |
 | `project-docs` | Dated work logs in `docs/work/`, pickup notes in `docs/notes/`. |
 | `system-config` | Change the Mac only through `~/System`, never by hand. |
