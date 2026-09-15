@@ -94,8 +94,9 @@ the focused tests, commit, and ask for review again. If you're told to cancel,
 stop before writing anything else.
 
 When a single `0-…-tasks` workspace performs its own reconciliation for work
-produced by a non-OpenAI model, it must run `codex-adversarial-review` before
-reporting the result.
+produced by a non-flagship model, such as DeepSeek or GLM, it must run
+`codex-adversarial-review` before reporting the result. A Claude Code runtime
+alone does not trigger this requirement.
 
 ## Merge
 

@@ -19,7 +19,7 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `agent-repurpose-workspace` | Reuse a workspace for a new role: wrap up, rename, reset. |
 | `commits` | No agent attribution in commits and PRs; loose conventional-commit style. |
 | `commit-sync` | After a commit, check the branch against `origin` and report how to synchronize it. |
-| `codex-adversarial-review` | Use Codex to independently review work from non-OpenAI models. |
+| `codex-adversarial-review` | Use Codex to independently review work from non-flagship models. |
 | `php-testing` | Run PHP tests with installed PAO support and parallel execution where supported. |
 | `writing` | House prose style and writing conventions. |
 | `project-docs` | Dated work logs in `docs/work/`, pickup notes in `docs/notes/`. |

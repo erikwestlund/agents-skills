@@ -54,9 +54,9 @@ orchestrator.
 
 Review the commits themselves, not the handoff:
 
-- For work produced by a non-OpenAI model, including a Claude Code session,
-  run the Codex adversarial review required by `codex-adversarial-review`
-  before approval.
+- For work produced by a non-flagship model, such as DeepSeek or GLM, run the
+  Codex adversarial review required by `codex-adversarial-review` before
+  approval. A Claude Code runtime alone does not trigger this requirement.
 
 - Does it do everything the brief asks, and nothing it doesn't?
 - Is it correct? Look for bugs, edge cases, and broken assumptions.
