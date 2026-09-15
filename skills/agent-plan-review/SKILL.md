@@ -54,6 +54,10 @@ orchestrator.
 
 Review the commits themselves, not the handoff:
 
+- For work produced by a non-OpenAI model, including a Claude Code session,
+  run the Codex adversarial review required by `codex-adversarial-review`
+  before approval.
+
 - Does it do everything the brief asks, and nothing it doesn't?
 - Is it correct? Look for bugs, edge cases, and broken assumptions.
 - Has it drifted from the plan in a way that matters?

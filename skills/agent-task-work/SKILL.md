@@ -93,6 +93,10 @@ Answer every comment by number: fixed (and how) or declined (and why). Rerun
 the focused tests, commit, and ask for review again. If you're told to cancel,
 stop before writing anything else.
 
+When a single `0-…-tasks` workspace performs its own reconciliation for work
+produced by a non-OpenAI model, it must run `codex-adversarial-review` before
+reporting the result.
+
 ## Merge
 
 When the orchestrator tells you `APPROVED`, send `0-reconcile` a merge request
