@@ -134,7 +134,8 @@ the workspace names defined above. Keep a message self-contained when the
 recipient cannot inspect the sender's session.
 
 Use these statuses consistently: `READY FOR REVIEW`, `CHANGES REQUESTED`,
-`BLOCKED`, `QUESTION`, `APPROVED`, `MERGE`, `MERGED`, `CONFLICT`, and `FAILED`.
+`BLOCKED`, `QUESTION`, `APPROVED`, `PREVIEW READY`, `MERGE`, `MERGED`,
+`CONFLICT`, and `FAILED`.
 
 ## Handoffs
 

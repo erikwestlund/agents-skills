@@ -32,6 +32,14 @@ Ask for confirmation before launching `single_complex`, `multi_simple`, or
 `multi_complex`. A clear user launch instruction activates planners. Workers
 start only after their parent gives them a complete implementation brief.
 
+Ask about previews only when the work requires testing a user's interaction
+with the application, such as a UI flow, route behavior, form, or browser
+journey. Do not ask for previews for backend, infrastructure, API, refactor, or
+data-only work. When a preview applies, ask whether the user wants individual
+task previews, a group preview while work is underway, or both. Recommend the
+group preview for multi-agent work. The status report must name the exact
+workspace and preview URL the user should open.
+
 Use `claude-code harness` only when its direct agent messaging is available.
 Its routine communication remains automatic. Otherwise use `default
 polyscope`: give the user one copy-ready message with absolute paths and never

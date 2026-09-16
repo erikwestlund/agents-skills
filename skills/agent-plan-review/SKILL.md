@@ -44,6 +44,9 @@ absolute path. It covers:
 - the tasks, in order. Each has a deliverable, the files it owns (no overlap
   between tasks), acceptance criteria, focused tests, and a suggested model.
 - dependencies between tasks, and which ones can run in parallel
+- when the work requires user-interaction testing: a preview contract naming
+  the interaction or route to check, required seed state, and whether the user
+  needs task, group, or final integrated preview
 
 Keep tightly coupled work in one group, and flag the work units that are hard
 enough to need a strong model. Raise shared-contract conflicts with the group

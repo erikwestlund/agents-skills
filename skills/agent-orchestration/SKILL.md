@@ -118,6 +118,27 @@ dispatches and tracks that group’s task executors, relays local review, and
 reports one approved merge candidate to `0-reconcile`. Groups coordinate shared
 contracts directly and share one `0-reconcile` when it exists.
 
+## Preview during implementation
+
+When the plan requires user-interaction testing, its preview contract may
+request a group preview. You own it. Keep a disposable group-preview branch
+based on the assigned base. Add only commits that the group's planner/reviewer
+has approved. Use the project's configured Polyscope or Herd workspace-preview
+setup and its unique workspace domain; do not use the root development domain.
+
+After each preview update, tell the user exactly where to look:
+
+```text
+Preview workspace: <absolute path> (<branch>)
+Preview URL: <URL>
+Includes: <approved commit ranges>
+Status: ready | blocked, with the reason
+```
+
+This branch exists for previewing in-progress combined work. It is separate
+from `0-reconcile`, does not authorize a push, and does not replace final
+integration checks.
+
 ## Review
 
 If a handoff covers only one of several steps, send it back without a review,

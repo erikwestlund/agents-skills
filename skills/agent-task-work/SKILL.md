@@ -87,6 +87,11 @@ on your branch. In a multi-group effort, never merge or push because
 `0-reconcile` does that. A single-task workspace follows its brief’s
 integration instructions; pushing still requires the user's authorization.
 
+When a brief requires user-interaction testing and requests a task preview,
+create and report it as the project directs. Treat it as a development aid. The
+orchestrator's group-preview workspace is the combined preview the user should
+open.
+
 ## Review
 
 Answer every comment by number: fixed (and how) or declined (and why). Rerun
