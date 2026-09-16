@@ -10,10 +10,6 @@ DeepSeek or GLM. Do not invoke it merely because a session uses Claude Code,
 and do not invoke it for work produced by an OpenAI or Anthropic flagship
 model.
 
-Run `codex-review status` before requesting a review. If it reports `off`, do
-not use the Codex plugin. The setting is an explicit cost-control preference;
-report that the review was skipped because it is off.
-
 For eligible work, request an adversarial review through the installed Codex
 plugin.
 
