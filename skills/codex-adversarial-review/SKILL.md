@@ -13,16 +13,11 @@ model.
 For eligible work, request an adversarial review through the installed Codex
 plugin.
 
-Choose the Codex reviewer to match the model whose work is being reviewed:
-
-| Source model | Codex reviewer |
-|---|---|
-| Fable | Astra |
-| Opus | Sol |
-| Sonnet or worker-tier model | Terra |
-
-This mapping selects a reviewer only after the non-flagship requirement is
-met. It does not make a flagship model eligible for this review.
+Use Sol as the standard Codex reviewer. Use Astra only for a critical-review
+escalation: security-sensitive changes, migrations, broad cross-system work,
+or unresolved material risk after standard review. The work must still meet the
+non-flagship requirement; a critical tier does not make OpenAI or Anthropic
+flagship work eligible for adversarial review.
 
 Give the reviewer the task brief or acceptance criteria, the relevant diff or
 commit range, tests run, and any known risks. Ask it to look for correctness
