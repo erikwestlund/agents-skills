@@ -40,43 +40,33 @@ OpenAI workspace, make the activation brief self-contained and do not instruct
 it to run Claude Code, select a Claude profile, load a Claude-only skill, or
 use Claude-specific messaging. Polyscope workspace messages work for both.
 
-## Start dormant, not working
+## Start planners and hold workers
 
-Every workspace gets an initial, role-specific message. A created workspace
-without an activation brief is not launched. The initial message is a
-**readiness message**, not permission to begin the group work.
-
-Put this rule verbatim in every initial message: “You are dormant until Erik
-directly messages your group's planner to begin. You may rename, load your
-role and communication skills, read local instructions and project structure,
-and check in with named partners. Do not create a plan or task brief, edit
-code, run tests, dispatch work, commit, merge, or push.”
-
-Only a direct human message to the planner authorizes the planner to create the
-group plan. The planner's resulting `PLAN READY` then authorizes its
-orchestrator to brief its waiting worker. Do not turn a launch brief, a status
-check, or a partner check-in into work authorization.
+Every workspace gets a role-specific message. A created workspace without an
+activation brief is not launched. A complete planning assignment authorizes a
+planner to create its plan. It must name the group goal, constraints, and plan
+location. Orchestrators, workers, and reconcile remain waiting until their
+normal parent handoff arrives.
 
 - **`0-reconcile`:** load `agent-reconcile`; orient and check in with group
   orchestrators if useful; wait for approved merge requests.
-- **Planner/reviewer:** load `agent-plan-review`; rename; orient; and check in
-  with its orchestrator and task worker. Wait for Erik's direct plan request
-  before creating a plan.
+- **Planner/reviewer:** load `agent-plan-review`; rename; create the assigned
+  plan; then send `PLAN READY` to its orchestrator.
 - **Orchestrator:** load `agent-orchestration`; orient and check in with its
-  planner and worker. Wait for the planner's human-authorized `PLAN READY`;
+  planner and worker. Wait for the planner's `PLAN READY`;
   do not write a substitute plan or dispatch guessed tasks.
 - **Task worker:** load `agent-task-work`; orient and check in with its
   orchestrator. Wait for the plan-derived task brief; do not edit or test.
 
-The planner model belongs only to planner/review. When the request says
-“planners run Opus; the rest run DeepSeek Flash,” use `claude_opus` for the
-two planners and `ds_flash` for the reconcile workspace, two orchestrators,
-and two task workers.
+Resolve each role with `agent-role resolve <provider> <role>` before launching.
+The planner model belongs only to planner/review. The requested reasoning level
+is policy metadata; report its effective value as `platform-default` until a
+launcher can set it.
 
 ## Carry the handoffs
 
-Creating the dormant workspaces is only the first half of this role. After
-Erik activates a planner, keep using the available Polyscope message channel:
+Creating the workspaces is only the first half of this role. After a planner
+sends `PLAN READY`, keep using the selected communication medium:
 
 1. Before every message, apply `agent-communication`'s recipient-verification
    rule. Open the recipient's actual worktree; confirm its current branch,

@@ -1,7 +1,8 @@
 # File-Based Communication
 
-Use this transport when direct cross-session messaging is unavailable, the
-recipient cannot be reached, or the agents use incompatible harnesses.
+Use this transport for durable context in default Polyscope after a prompt
+explicitly names the file. Routine default-Polyscope communication is human
+copy/paste, not file polling.
 
 ## Context Files
 
@@ -12,7 +13,7 @@ in `docs/` under the `project-docs` skill.
   usually the main checkout's `.context/`. Other worktrees cannot see a
   worktree's own `.context/`.
 - Each task gets two files named after the task agent's workspace. Each side
-  writes only its own file and watches the other's:
+  writes only its own file when its received prompt directs it to do so:
   - `<name>.brief.md`, written by the orchestrator, contains the brief,
     reviews, and approval.
   - `<name>.handoff.md`, written by the task agent, contains handoffs,
@@ -22,9 +23,8 @@ in `docs/` under the `project-docs` skill.
 - Append each entry under a dated, signed heading beginning with a status from
   the shared communication contract.
 
-Watch the other side's file so work resumes without a prompt. When `Monitor` is
-available, use an until-loop that exits on a new status line. Otherwise, poll
-every 30–60 seconds. Stop at `APPROVED` or `MERGED`, or when directed.
+Do not watch or poll the other side's file. The next human-carried prompt names
+the exact file and action to take.
 
 ## Human Relay
 

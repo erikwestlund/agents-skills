@@ -8,6 +8,11 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `polyscope-workflow` | Route a Polyscope session to its role and supporting skills. |
 | `polyscope-launch` | Launch and inspect managed Polyscope workspaces with `ps`. |
 | `polyscope-team-launch` | Provision a Polyscope team before group orchestration begins. |
+| `workflow-select` | Select a single- or multi-agent workflow and confirm role models before launch. |
+| `workflow-single-simple` | One bounded task with one executor. |
+| `workflow-single-complex` | One complex task with planning, execution, and review. |
+| `workflow-multi-simple` | Several simple tasks with a lead, workers, and reconciliation. |
+| `workflow-multi-complex` | Several complex task groups with orchestration, focused planning, execution, and reconciliation. |
 | `agent-based-polyscope-launching` | Launch and activate every role in a Polyscope team. |
 | `agent-orchestration` | Run an orchestrated team: roles, setup, planning, dispatch, and briefs. |
 | `agent-reconcile` | The single `0-reconcile` agent: merge, test, clean history, push. |
@@ -26,9 +31,12 @@ Cross-project skills for Claude Code and Codex. OpenCode reads
 | `system-config` | Change the Mac only through `~/System`, never by hand. |
 | `r-stats` | Statistical work in R: framework, readability, notebooks, scripts, plots. |
 
-The harness can also route an agent to a third-party API instead of a Claude
-model. Which models are in use changes over time; plan/review gets the stronger
-one, and every other role the cheaper one.
+The managed role policy lives at
+`~/System/config/agent-providers/role-models.yml`. It maps each provider and
+semantic role to a model and requested reasoning level. Use `agent-role resolve
+<provider> <role>` before a launch. The current launcher reports
+`reasoning_effective=platform-default`, because it cannot yet transmit a
+reasoning-effort setting to the provider.
 
 ## Agent runtimes
 
@@ -64,11 +72,12 @@ plan/review, `2` is orchestrator, and tasks start at `3` (`4+` for added
 workers). It is not a task ID, but it is required so each group reads top to
 bottom in Polyscope.
 
-New teams begin **dormant**. Their initial messages permit orientation and
-partner check-ins only—never planning, code changes, tests, dispatch, commits,
-merges, or pushes. Erik directly messages a planner to authorize the first
-group plan; only its resulting handoff activates the group orchestrator and
-task worker.
+For a multi-complex team, the launcher gives each planner a complete planning
+assignment. That authorizes planning. The planner's `PLAN READY` activates its
+orchestrator, and only the orchestrator's complete plan-derived brief activates
+the task worker. Reconciliation starts from an approved merge request. Use
+`workflow-select` before launch to choose the smaller single-simple,
+single-complex, or multi-simple workflow when it fits better.
 
 Every activation brief begins with its assigned branch name and an instruction
 to rename both the git branch and Polyscope database row before any other work.

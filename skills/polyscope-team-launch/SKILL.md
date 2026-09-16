@@ -5,9 +5,11 @@ description: "Provision a Polyscope orchestrated team from a project, role model
 
 # Polyscope team launch
 
-This skill defines the team shape. `agent-based-polyscope-launching` performs
-the actual Polyscope launches and follow-up messages. `agent-orchestration`
-governs a task group after its plan is ready.
+This skill defines the multi-complex team shape. For any new agent request,
+load `workflow-select` first. It routes simple and single-task work to their
+smaller workflows. `agent-based-polyscope-launching` performs the actual
+Polyscope launches, and `agent-orchestration` governs a task group after its
+plan is ready.
 
 ## Team math
 
@@ -40,8 +42,8 @@ order:
    `agent-reconcile`, establishes the integration branch, and waits for merge
    requests. It does not implement proposed work units.
 2. Launch one group plan/review workspace per requested work unit, named
-   `N-<group>-1-plan-review-…`. Each loads `agent-plan-review`, orients, and
-   waits for Erik's direct message before writing a plan.
+   `N-<group>-1-plan-review-…`. Each loads `agent-plan-review` and starts from
+   the launcher's complete planning assignment.
 3. Launch one group orchestrator for every group on the executor model. Its
    name is `N-<group>-2-orchestrator-…`. Its activation brief loads `agent-orchestration` and tells it to wait for the
    named planner's `PLAN READY`; it must not invent a plan or dispatch yet.
@@ -57,12 +59,11 @@ not plan a group.
 
 Do not call the team launched until all `1 + (3 × G)` workspaces have been
 created and received their activation briefs. Then report every workspace's
-role and state: reconcile dormant, planners dormant, orchestrators dormant,
-and workers dormant. Do not create a plan, run tests, edit code, dispatch, or
-otherwise begin work until Erik directly messages a planner. After that
-message, every `PLAN READY` must be delivered to its orchestrator, and the
-orchestrator must deliver its plan-derived brief to the waiting worker. If the
-plan needs more workers, the orchestrator launches them then.
+role and state: reconcile waiting, planners planning, orchestrators waiting,
+and workers waiting. A planner begins from its complete planning assignment.
+Every `PLAN READY` goes to its orchestrator, and the orchestrator delivers a
+plan-derived brief to the waiting worker. If the plan needs more workers, the
+orchestrator launches them then.
 
 For two groups, import and registration, with “planners run Opus; the rest run
 DeepSeek Flash,” the visible progression is:
@@ -116,10 +117,10 @@ waits. A planner brief requests a plan; an orchestrator brief says which
 planner it waits for; a task-worker brief says which orchestrator it waits for.
 Do not send a generic “work on this group” brief to any role.
 
-The first brief is always dormant. It permits orientation and partner check-ins
-only; it must expressly prohibit planning, task-brief creation, edits, tests,
-dispatch, commits, merges, and pushes. A later direct message from Erik to the
-planner is the only initial authorization to begin a group.
+The planner's first brief is a complete planning assignment. It permits
+planning, but never implementation, task dispatch, merging, or pushing. The
+orchestrator and worker initial briefs remain waiting briefs. A worker starts
+only from the orchestrator's complete plan-derived implementation brief.
 
 Put the assigned target branch and the full rename instruction first in every
 activation brief. This is especially mandatory for planners: they must rename

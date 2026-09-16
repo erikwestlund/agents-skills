@@ -29,6 +29,13 @@ context and, for R projects, directs the agent to load `r-stats`. A user who
 asks only for a workspace has authorized a launch without an extra prompt; it
 creates a ready workspace without sending an initial agent task.
 
+## Agent workflows
+
+When the user asks to organize or launch coding agents, load `workflow-select`
+first. It selects the single-simple, single-complex, multi-simple, or
+multi-complex shape and requires model confirmation where appropriate. The
+rest of this section describes the multi-complex orchestrated-team shape.
+
 ## Orchestrated teams
 
 Treat `orchestrated team` as the user-facing term for a multi-agent effort.
@@ -42,11 +49,11 @@ reconciles its own change. When the user asks to start an orchestrated team,
 load `agent-based-polyscope-launching` and `polyscope-team-launch`, then use
 `agent-orchestration` inside each group.
 
-The named work units identify dormant task groups; they do not authorize work.
-Only after Erik directly messages a planner may it check boundaries and
-dependencies, create a plan, and activate its group. Use isolated workspaces
-unless the user explicitly requests direct edits. Select direct messages or
-context files from the actual harness capabilities; `Claude Code` in the
+The launcher gives each planner a complete planning assignment, which
+authorizes planning. Workers start only after their parent gives them a
+complete implementation brief. Use isolated workspaces unless the user
+explicitly requests direct edits. Select the claude-code harness or default
+polyscope communication medium from actual capabilities; `Claude Code` in the
 request identifies the agent runtime, not a required transport.
 
 For example:

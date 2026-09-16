@@ -21,17 +21,6 @@ actual harness capabilities, as `agent-communication` describes.
 
 Only a group orchestrator launches or delegates work inside its assigned group.
 
-## User-facing term
-
-`Orchestrated team` is the user-facing term for this workflow. It means a
-multi-agent effort with an orchestrator, plan/review, task executors, and
-reconciliation. A request may name proposed `work units`; treat them as plan
-input, then split or combine them according to dependencies and file overlap.
-
-`Claude Code` identifies the requested agent runtime. It does not require a
-specific messaging transport. Choose direct messages or context files from the
-actual harness capabilities, as `agent-communication` describes.
-
 ## Roles
 
 | Role | Workspace | Model | Does | Skill |
@@ -72,11 +61,10 @@ or dispatch workers from guesses.
 **Check the shared workspace.** `polyscope-team-launch` creates
 `0-reconcile` first for a multi-group initiative. Never start a second.
 
-**Remain dormant until planning is human-authorized.** At team creation, you
-may orient by reading role/local instructions and checking in with your
-planner, task worker, and `0-reconcile`. Do not write plans or briefs, inspect
-code for implementation, run tests, edit files, or dispatch work. Proceed only
-after your planner receives Erik's direct request and sends `PLAN READY`.
+**Wait for `PLAN READY`.** At team creation, you may orient by reading
+role/local instructions and checking in with your planner, task worker, and
+`0-reconcile`. Do not write plans or briefs, inspect code for implementation,
+run tests, edit files, or dispatch work until your planner sends `PLAN READY`.
 
 ## Split and dispatch
 
@@ -118,9 +106,10 @@ Write every brief so it works even if the agent never loads a skill. It gives:
 
 ## Communicate
 
-Use direct messages when every agent is Claude Code, and context files
-otherwise, watching the handoff files. Put any message a person has to carry in
-one copyable code block with absolute paths. Details: `agent-communication`.
+Use automatic direct messages in the claude-code harness. In default
+Polyscope, give the user one copyable message with absolute paths. Memos hold
+durable context only when the prompt names their paths; do not watch handoff
+files. Details: `agent-communication`.
 
 ## Group orchestration
 

@@ -105,20 +105,24 @@ If any check disagrees, do not send. Find the correct worktree or ask the
 sender/parent to resolve the identity. Repeat this check when a workspace has
 been renamed, repurposed, reset, or has received a new assignment.
 
-## Select The Transport
+## Select the communication medium
 
 Select the transport from the tools available in the current session. A model
 or provider name does not establish which communication features the harness
 provides.
 
-- When `ListAgents` and `SendMessage` are available, read
-  [`references/claude-code.md`](references/claude-code.md).
+- When `ListAgents` and `SendMessage` are available, use the **claude-code
+  harness** and read [`references/claude-code.md`](references/claude-code.md).
+  Keep routine messages automatic. Do not switch to human relay merely because
+  a memo could be used; ask the user before changing that medium.
 - When another harness provides equivalent cross-session tools, use its direct
   messaging facility. Apply the same addressing and fallback rules described
   in the Claude Code reference.
-- When direct messaging is unavailable, the recipient cannot be reached, or
-  the agents use incompatible harnesses, read
-  [`references/file-based.md`](references/file-based.md).
+- Otherwise use **default polyscope**. The user carries routine communication
+  as one copy-ready message with absolute paths. A memo can retain durable
+  context, but agents do not poll or automatically read it. Read
+  [`references/file-based.md`](references/file-based.md) only when a prompt
+  explicitly names the memo or handoff file to read or write.
 
 Read only the reference for the selected transport. If direct messaging fails,
 load the file-based reference and continue there.

@@ -16,11 +16,10 @@ You're the only agent that merges or pushes.
 says planners run Opus and the rest run DeepSeek Flash, reconciliation runs
 `ds_flash`.
 
-**Remain dormant at launch.** You may rename, load your role and communication
-skills, read local instructions, and check in with group orchestrators. Do not
-edit code, run tests, merge, push, or prepare integration work until an
-approved merge request arrives after a planner has been directly activated by
-Erik.
+**Wait for an approved merge request.** You may rename, load your role and
+communication skills, read local instructions, and check in with group
+orchestrators. Do not edit code, run tests, merge, push, or prepare integration
+work until an approved merge request arrives.
 
 ## Merge requests
 
