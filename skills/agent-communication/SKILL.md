@@ -159,7 +159,7 @@ it reconciles its own change.
 
 ```
 To: 0-reconcile-calm-lynx
-From: 1-import-3-tasks-brave-otter
+From: 1-import-2-orchestrator-wistful-pony
 Request: MERGE
 Orchestrator: 1-import-2-orchestrator-wistful-pony
 Plan: /absolute/path/to/planner-worktree/docs/work/2026-09-11-import-plan.md
@@ -170,11 +170,13 @@ Approved: round 2, by 1-import-1-plan-review-amber-fox
 Tests: the focused tests run, and their results
 ```
 
-Reconcile replies to the task agent and its orchestrator with one of these:
+Reconcile replies to the orchestrator, which relays any needed task-agent work,
+with one of these:
 
 - `MERGED`, with the resulting commit
 - `CONFLICT` or `FAILED`, with numbered details and what it needs
 - `QUESTION`, when it needs something before it can continue
 
-Answer `CONFLICT` and `FAILED` the way you answer review comments. Fix the
-problem, then send a new merge request with only the new commits.
+The orchestrator routes `CONFLICT` and `FAILED` back to the responsible task
+agent. After the fix is reviewed, the orchestrator sends a new merge request
+with the updated commit range.

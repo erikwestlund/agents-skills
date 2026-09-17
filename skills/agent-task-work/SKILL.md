@@ -105,8 +105,9 @@ alone does not trigger this requirement.
 
 ## Merge
 
-When the orchestrator tells you `APPROVED`, send `0-reconcile` a merge request
-in a multi-group effort, as `agent-communication` describes. A single
-`0-…-tasks` workspace completes its own reconciliation checks and reports the
-result to its orchestrator. Answer `CONFLICT` or `FAILED` the way you answer
-review comments. You're done when the change is reconciled.
+When the orchestrator tells you `APPROVED`, return the final branch and commit
+range to it. The orchestrator sends `0-reconcile` the merge request in a
+multi-group effort, as `agent-communication` describes. A single `0-…-tasks`
+workspace completes its own reconciliation checks and reports the result to its
+orchestrator. Answer `CONFLICT` or `FAILED` the way you answer review comments.
+You're done when the change is reconciled.

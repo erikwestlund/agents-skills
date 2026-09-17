@@ -17,9 +17,12 @@ stop after only `0-reconcile` and group orchestrators.
 
 For each group `N`, create all three roles:
 
-1. `N-<group>-1-plan-review-…` on the planner model.
-2. `N-<group>-2-orchestrator-…` on the executor model.
-3. `N-<group>-3-tasks-…` on the executor model.
+1. `N-<group>-1-plan-review-…` on the resolved `planner_reviewer` model.
+2. `N-<group>-2-orchestrator-…` on the resolved `orchestrator` model.
+3. `N-<group>-3-tasks-…` on the resolved `task_worker` model.
+
+Launch `0-reconcile-…` on the separately resolved `reconciler` model. Never
+inherit its model from the orchestrator or task worker.
 
 The number after the group name is a sorting sequence, not a task identifier:
 plan/review is always `1`, orchestrator is always `2`, and tasks begin at `3`.
@@ -77,7 +80,7 @@ sends `PLAN READY`, keep using the selected communication medium:
    that group's verified waiting worker.
 4. If the plan needs more than one worker, the orchestrator launches and
    briefs extra `N-<group>-4-tasks-…`, `N-<group>-5-tasks-…`, and later
-   workspaces on the executor model.
+   workspaces on the resolved `task_worker` model.
 5. After review approval, the orchestrator sends the merge request to
    `0-reconcile`.
 
@@ -92,5 +95,6 @@ it shares the same model or provider.
 
 Report the named workspaces and their state, not a generic “team is up.” A
 complete first report for two groups has seven rows: reconcile waiting, two
-planners dormant, two orchestrators dormant, and two workers dormant. Do not
-claim that planning or implementation has begun until Erik activates a planner.
+planners planning, two orchestrators waiting, and two workers waiting. Do not
+claim that implementation has begun until an orchestrator dispatches a complete
+worker brief.

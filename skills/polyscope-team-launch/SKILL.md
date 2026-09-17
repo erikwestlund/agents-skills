@@ -44,10 +44,11 @@ order:
 2. Launch one group plan/review workspace per requested work unit, named
    `N-<group>-1-plan-review-…`. Each loads `agent-plan-review` and starts from
    the launcher's complete planning assignment.
-3. Launch one group orchestrator for every group on the executor model. Its
+3. Launch one group orchestrator for every group on the resolved orchestrator
+   model. Its
    name is `N-<group>-2-orchestrator-…`. Its activation brief loads `agent-orchestration` and tells it to wait for the
    named planner's `PLAN READY`; it must not invent a plan or dispatch yet.
-4. Launch one task worker for every group on the executor model. Its activation
+4. Launch one task worker for every group on the resolved task-worker model. Its activation
    name is `N-<group>-3-tasks-…`. Its activation brief loads `agent-task-work` and tells it to wait for a plan-derived brief
    from the named orchestrator; it must not edit while waiting.
 
@@ -91,14 +92,14 @@ to `0-reconcile`, then number the task groups from `1`.
 
 ## Models
 
-Use the role models the user specifies. A requested planner model applies only
-to each group plan/review workspace. A requested executor model applies to the
-group orchestrators, task executors, and `0-reconcile`. `claude_opus` selects
-native Claude Opus for planners. `ds_flash` selects DeepSeek Flash for all of
-the latter roles. When the user gives one model for the entire team, apply it
-to every launched role.
+Use the role models the user specifies. Otherwise resolve each semantic role
+independently with `agent-role resolve <provider> <role>`: `planner_reviewer`,
+`orchestrator`, `task_worker`, and `reconciler`. Do not use one executor model
+as an implicit default for all three non-planning roles. When the user gives
+one model for the entire team, that explicit override applies to every role.
 
-Interpret “planners run Opus; the rest run DeepSeek Flash” as
+Interpret an explicit override such as “planners run Opus; the rest run
+DeepSeek Flash” as
 `claude_opus` for group plan/review workspaces and `ds_flash` for
 orchestrators, task executors, and `0-reconcile`. Do not treat an orchestrator
 as a planner or ask the user to resolve that distinction.

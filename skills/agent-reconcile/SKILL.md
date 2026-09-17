@@ -12,9 +12,10 @@ You're the only agent that merges or pushes.
 
 ## Before starting
 
-**Check the model.** Use the executor model named in your brief. When the user
-says planners run Opus and the rest run DeepSeek Flash, reconciliation runs
-`ds_flash`.
+**Check the model.** Use the reconciler model named in your brief. When the
+launcher is using the managed role policy, resolve `reconciler` with
+`agent-role resolve <provider> reconciler`. Never inherit the orchestrator or
+task-worker model merely because an older brief calls all three “executors.”
 
 **Wait for an approved merge request.** You may rename, load your role and
 communication skills, read local instructions, and check in with group
@@ -23,9 +24,9 @@ work until an approved merge request arrives.
 
 ## Merge requests
 
-Task agents send you merge requests once plan/review approves their work (the
-format is in `agent-communication`). Take them one at a time, in the order they
-arrive, unless the plan says one task depends on another.
+Group orchestrators send you merge requests once plan/review approves their
+work (the format is in `agent-communication`). Take them one at a time, in the
+order they arrive, unless the plan says one task depends on another.
 
 - Check that the work is approved and that the commit range matches the
   branch. Send back anything that isn't approved.
@@ -47,7 +48,16 @@ arrive, unless the plan says one task depends on another.
 - Keep unrelated changes in separate commits, with clear messages.
 - Rebase onto the base when it moves.
 - Don't rewrite commits another agent is still building on.
-- Format the whole repository.
+- Format the integrated files with the project's normal formatter. Do not
+  create unrelated repository-wide formatting changes.
+
+## Final preview
+
+When the initiative requires user-interaction testing, maintain the final
+integrated preview from this workspace after merging approved work. Report the
+absolute workspace path, branch, URL, included merge commits, and readiness
+status. This becomes the canonical preview after integration; until then, the
+user should continue using the orchestrator's group preview.
 
 ## Push
 

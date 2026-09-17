@@ -25,10 +25,10 @@ Only a group orchestrator launches or delegates work inside its assigned group.
 
 | Role | Workspace | Model | Does | Skill |
 |---|---|---|---|---|
-| Group plan/review | `N-<group>-1-plan-review-…` | Planner model | Writes one group plan and reviews that group’s completed work. | `agent-plan-review` |
-| Group orchestrator | `N-<group>-2-orchestrator-…` | Executor model | Turns the approved plan into briefs, dispatches workers, and tracks the group. | this one |
-| Task executor | `N-<group>-3-tasks-…`, then `4+` as the plan needs | Executor model | Implements one brief for its group. | `agent-task-work` |
-| Reconcile | `0-reconcile-…`, only one when several groups exist | Executor model | Merges approved groups, resolves conflicts, runs the full suite, keeps the history clean, and pushes. | `agent-reconcile` |
+| Group plan/review | `N-<group>-1-plan-review-…` | `planner_reviewer` model | Writes one group plan and reviews that group’s completed work. | `agent-plan-review` |
+| Group orchestrator | `N-<group>-2-orchestrator-…` | `orchestrator` model | Turns the approved plan into briefs, dispatches workers, and tracks the group. | this one |
+| Task executor | `N-<group>-3-tasks-…`, then `4+` as the plan needs | `task_worker` model | Implements one brief for its group. | `agent-task-work` |
+| Reconcile | `0-reconcile-…`, only one when several groups exist | `reconciler` model | Merges approved groups, resolves conflicts, runs the full suite, keeps the history clean, and pushes. | `agent-reconcile` |
 
 For example, “planners run Opus; the rest run DeepSeek Flash” means
 `claude_opus` for group plan/review and `ds_flash` for the other three roles.
@@ -53,7 +53,8 @@ groups `1`, `2`, and onward.
 workspaces (e.g. you're a single session in a main checkout), you aren't
 orchestrating. Just do the work.
 
-**Check the model and plan.** You run on the group's executor model. Your
+**Check the model and plan.** You run on the group's resolved orchestrator
+model. Your
 brief must name an approved group-plan path and the plan/review workspace. If
 it does not, ask the team launcher for them; do not write a replacement plan
 or dispatch workers from guesses.
@@ -72,7 +73,7 @@ run tests, edit files, or dispatch work until your planner sends `PLAN READY`.
   deliverables, file ownership, acceptance criteria, and focused tests.
 - Keep tightly coupled work in one group. A group with one work unit can have
   one task executor; a larger group can dispatch several task executors.
-- Launch every task worker on the group’s executor model unless the user
+- Launch every task worker on the resolved task-worker model unless the user
   explicitly assigns a different model. Do not silently substitute the
   planner model.
 - Keep one agent slot free for yourself.
@@ -98,7 +99,8 @@ Write every brief so it works even if the agent never loads a skill. It gives:
   - when in doubt about thoroughness, make it good
   - run only focused tests, starting with the narrowest file or filter
   - commit on your own branch, and never merge or push
-  - once approved, send `0-reconcile` a merge request
+  - once approved, return the final commit range to the orchestrator; the
+    orchestrator sends `0-reconcile` the merge request
   - give absolute paths in every message
 - **first brief only:** the workspace name, and the base to update to, meaning
   the latest integrated code. That's usually `origin/main`, or `0-reconcile`'s
